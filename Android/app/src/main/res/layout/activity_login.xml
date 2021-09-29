@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/IDText"
+        android:id="@+id/textViewId"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="ID"
@@ -20,7 +20,7 @@
         />
 
     <EditText
-        android:id="@+id/PWText"
+        android:id="@+id/textViewPw"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="PASSWORD"
@@ -35,13 +35,29 @@
         />
 
     <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/border"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:onClick="onButtonLoginClicked"
+        />
+
+    <Button
         android:id="@+id/buttonJoin"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="JOIN"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:background="@drawable/border"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlack"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="10dp"
