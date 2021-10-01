@@ -25,5 +25,33 @@ public class User implements UserDetails {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id"))
     private Set<UserAuthority> authorities;
 
+    private String email;
+
+    private String password;
+
+    private String nickName;
+
+    private boolean enabled;
+
+    @Override
+    public String getUsername() {
+        return nickName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enabled;
+    }
+
 
 }
