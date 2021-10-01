@@ -1,8 +1,11 @@
 package com.example.myrestaurant.dto.user.service;
 
+import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
+import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
 import com.example.myrestaurant.dto.user.domain.User;
 import com.example.myrestaurant.dto.user.domain.UserAuthority;
 import com.example.myrestaurant.dto.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,13 +16,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private RestaurantService restaurantService;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -41,6 +49,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User save(User user) {
+        restaurantService.saveAll(user.getRestaurantList());
         return userRepository.save(user);
     }
 
@@ -61,5 +70,13 @@ public class UserService implements UserDetailsService {
         });
     }
 
+    public User addRestaurants(User user, Restaurant... restaurants) {
+        user.addRestaurant(restaurants);
+        return save(user);
+    }
+
+    public Set<Restaurant> getRestaurants(User user) {
+        return user.getRestaurantList();
+    }
 }
 

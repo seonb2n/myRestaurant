@@ -1,12 +1,13 @@
 package com.example.myrestaurant.dto.user.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -24,6 +25,10 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id"))
     private Set<UserAuthority> authorities;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Set<Restaurant> restaurantList;
 
     private String email;
 
@@ -53,5 +58,7 @@ public class User implements UserDetails {
         return enabled;
     }
 
-
+    public void addRestaurant(Restaurant... restaurants) {
+        Collections.addAll(this.restaurantList, restaurants);
+    }
 }
