@@ -1,10 +1,12 @@
 package com.example.myrestaurant;
 
 import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
+import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
 import com.example.myrestaurant.dto.user.domain.User;
 import com.example.myrestaurant.dto.user.repository.UserRepository;
 import com.example.myrestaurant.dto.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -25,7 +27,7 @@ public class UserServiceTest extends WebIntegrationTest{
 
     @Autowired
     private UserService userService;
-
+    
     private String greetingUrl() {
         return "http://localhost:"+port+"/greeting";
     }
@@ -33,25 +35,47 @@ public class UserServiceTest extends WebIntegrationTest{
     @BeforeEach
     void before() {
 
-        Set<Restaurant> restaurants = new HashSet<>();
-        restaurants.add(Restaurant.builder()
+        userRepository.deleteAll();
+
+        Set<Restaurant> restaurants1 = new HashSet<>();
+        restaurants1.add(Restaurant.builder()
                 .name("성산짜장")
                 .build());
 
-        restaurants.add(Restaurant.builder()
+        restaurants1.add(Restaurant.builder()
                 .name("반올림피자")
                 .build());
 
-        userRepository.deleteAll();
-        User user = userService.save(User.builder()
+        User user1 = userService.save(User.builder()
                 .email("user1@naver.com")
                 .password("1111")
                 .nickName("TestUser01")
-                .restaurantList(restaurants)
+                .restaurantList(restaurants1)
                 .enabled(true)
                 .build());
 
-        userService.addAuthority(user.getUserId(), "ROLE_USER");
+        userService.addAuthority(user1.getUserId(), "ROLE_USER");
+
+
+        Set<Restaurant> restaurants2 = new HashSet<>();
+        restaurants2.add(Restaurant.builder()
+                .name("성산짜장")
+                .build());
+
+        restaurants2.add(Restaurant.builder()
+                .name("bbq 치킨")
+                .build());
+
+        User user2 = userService.save(User.builder()
+                .email("user2@naver.com")
+                .password("2222")
+                .nickName("TestUser02")
+                .restaurantList(restaurants2)
+                .enabled(true)
+                .build());
+
+        userService.addAuthority(user2.getUserId(), "ROLE_USER");
+
     }
 
     @Test
@@ -73,5 +97,20 @@ public class UserServiceTest extends WebIntegrationTest{
 
         System.out.println(userService.findUser("user1@naver.com"));
     }
+
+    @DisplayName("User 와 Restaurant DB 에 대한 테스트")
+    @Test
+    void test_3() {
+        User user1 = userService.findUser("user1@naver.com").get();
+        System.out.println(user1.getRestaurantList());
+
+        User user2 = userService.findUser("user2@naver.com").get();
+        System.out.println(user2.getRestaurantList());
+
+        userService.deleteRestaurant(user2, userService.getRestaurant(user2, 4L));
+
+        System.out.println(user1.getRestaurantList());
+        System.out.println(user2.getRestaurantList());
+}
 
 }

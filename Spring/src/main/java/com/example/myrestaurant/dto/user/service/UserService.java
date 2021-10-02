@@ -1,6 +1,7 @@
 package com.example.myrestaurant.dto.user.service;
 
 import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
+import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
 import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
 import com.example.myrestaurant.dto.user.domain.User;
 import com.example.myrestaurant.dto.user.domain.UserAuthority;
@@ -77,6 +78,27 @@ public class UserService implements UserDetailsService {
 
     public Set<Restaurant> getRestaurants(User user) {
         return user.getRestaurantList();
+    }
+
+    public Restaurant getRestaurant(User user, Long id) {
+        if (restaurantService.findById(id).isPresent()) {
+            if(user.getRestaurantList().contains(restaurantService.findById(id).get())) {
+                return restaurantService.findById(id).get();
+            }
+        }
+
+        return null;
+    }
+
+    public void deleteRestaurant(User user, Restaurant restaurant) {
+        if(getRestaurants(user).contains(restaurant)) {
+            Set<Restaurant> s1 = getRestaurants(user);
+            s1.remove(restaurant);
+            user.setRestaurantList(s1);
+            save(user);
+        } else {
+            System.out.println("Error : restaurant does not exist");
+        }
     }
 }
 

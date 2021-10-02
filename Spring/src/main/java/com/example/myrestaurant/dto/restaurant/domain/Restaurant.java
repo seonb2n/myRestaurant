@@ -20,6 +20,8 @@ public class Restaurant {
 
     private String location;
 
+    private String link;
+
     private String category;
 
     @ManyToOne
