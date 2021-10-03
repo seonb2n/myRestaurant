@@ -58,8 +58,9 @@ public class LoginActivity extends AppCompatActivity {
 
         String id = textViewId.getText().toString();
         String password = textViewPw.getText().toString();
-
         //TODO Spring server 로부터, 해당 id, pw 가 등록된 유저인지 확인하는 task 만들기
+
+
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.myrestaurant.dto.user.service;
 
+import com.example.myrestaurant.config.UserEnrollForm;
 import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
 import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
 import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,17 @@ public class UserService implements UserDetailsService {
     public User save(User user) {
         restaurantService.saveAll(user.getRestaurantList());
         return userRepository.save(user);
+    }
+
+    public User enroll(UserEnrollForm userEnrollForm) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        userEnrollForm.setPassword(encoder.encode(userEnrollForm.getPassword()));
+
+        return userRepository.save(User.builder()
+                .email(userEnrollForm.getEmail())
+                .password(userEnrollForm.getPassword())
+                .build()
+        );
     }
 
     public void addAuthority(Long userId, String authority) {
