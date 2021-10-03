@@ -1,4 +1,4 @@
-package com.example.myrestaurant;
+package com.example.myrestaurant.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -6,13 +6,25 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myrestaurant.R;
+import com.example.myrestaurant.dto.RetrofitService;
+import com.example.myrestaurant.dto.UserResult;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,7 +73,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setRetrofitInit() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://172.30.1.13:8833/getUserData/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
+        Call<UserResult> call = retrofitService.getUser();
+
+        call.enqueue(new Callback<UserResult>() {
+            @Override
+            public void onResponse(Call<UserResult> call, Response<UserResult> response) {
+                if(response.isSuccessful()) {
+                    UserResult result = response.body();
+                    Log.d(TAG, "onResponse: 성공, 결과 \n"+result.toString());
+                } else {
+                    Log.d(TAG, "onResponse: 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResult> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     public void onButtonLoginClicked(View v) {

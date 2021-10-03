@@ -7,10 +7,8 @@ import com.example.myrestaurant.dto.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,10 +30,22 @@ public class HomeController {
         return userService.enroll(form1);
     }
 
+    @GetMapping("/getUserData")
+    public User getUserData() {
+        return userService.findUser("test").get();
+    }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/greeting")
-    public String greeting() {
-        return "hello";
+    public String greeting(@AuthenticationPrincipal User user) {
+        return "hello " + user.getEmail();
+    }
+
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/getLoginUserData")
+    public User getLoginUserData(@AuthenticationPrincipal User user) {
+        return userService.findUser(user.getEmail()).get();
     }
 
 }
