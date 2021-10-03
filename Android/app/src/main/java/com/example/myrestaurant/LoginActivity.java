@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import retrofit2.Retrofit;
+
 public class LoginActivity extends AppCompatActivity {
 
     Button buttonLogin;
@@ -21,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText textViewPw;
 
     static final int INTERNET_PERMISSON=1;
+
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,13 @@ public class LoginActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECEIVE_SMS}, INTERNET_PERMISSON);
             }
         }
+
+        setRetrofitInit();
+
+    }
+
+    private void setRetrofitInit() {
+
     }
 
     public void onButtonLoginClicked(View v) {
