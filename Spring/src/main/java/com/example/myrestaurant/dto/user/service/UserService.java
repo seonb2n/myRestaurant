@@ -57,14 +57,18 @@ public class UserService implements UserDetailsService {
     }
 
     public User enroll(UserEnrollForm userEnrollForm) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        userEnrollForm.setPassword(encoder.encode(userEnrollForm.getPassword()));
 
-        return userRepository.save(User.builder()
-                .email(userEnrollForm.getEmail())
-                .password(userEnrollForm.getPassword())
-                .build()
-        );
+        if(!userRepository.findUserByEmail(userEnrollForm.getEmail()).isPresent()) {
+            return userRepository.save(User.builder()
+                    .email(userEnrollForm.getEmail())
+                    .password(userEnrollForm.getPassword())
+                    .enabled(true)
+                    .build()
+            );
+        }
+
+        throw new RuntimeException("이미 존재하는 계정입니다.");
+
     }
 
     public void addAuthority(Long userId, String authority) {

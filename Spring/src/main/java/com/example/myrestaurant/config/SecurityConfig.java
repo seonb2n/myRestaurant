@@ -13,14 +13,25 @@ import org.springframework.security.core.userdetails.User;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final UserService userService;
+
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .httpBasic().and()
+                .formLogin(login -> login.defaultSuccessUrl("/", false))
                 .authorizeRequests(request -> {
                     request.antMatchers("/", "/userEnroll").permitAll()
                             .anyRequest().authenticated();
