@@ -16,13 +16,17 @@ import android.widget.Toast;
 
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.RetrofitService;
+import com.example.myrestaurant.dto.UserLoginForm;
 import com.example.myrestaurant.dto.UserResult;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.content.ContentValues.TAG;
 
@@ -37,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     static final int INTERNET_PERMISSON=1;
 
     private Retrofit retrofit;
+    private RetrofitService retrofitService;
+    private final String BASEURL = "http://172.30.1.13:8833/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +80,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setRetrofitInit() {
+
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.30.1.13:8833/getUserData/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASEURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        retrofitService = retrofit.create(RetrofitService.class);
 
         Call<UserResult> call = retrofitService.getUser();
 
@@ -104,7 +118,26 @@ public class LoginActivity extends AppCompatActivity {
 
         String id = textViewId.getText().toString();
         String password = textViewPw.getText().toString();
-        //TODO Spring server 로부터, 해당 id, pw 가 등록된 유저인지 확인하는 task 만들기
+
+        UserLoginForm userLoginForm = new UserLoginForm(id, password);
+        Call<String> loginTest = retrofitService.loginTest(userLoginForm);
+
+        loginTest.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()) {
+                    String result = response.toString();
+                    Log.d(TAG, "onResponse: 성공, 결과 \n"+result);
+                } else {
+                    Log.d(TAG, "onResponse: 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
 
 
 
