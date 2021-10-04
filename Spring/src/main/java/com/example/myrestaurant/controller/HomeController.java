@@ -1,6 +1,7 @@
 package com.example.myrestaurant.controller;
 
 import com.example.myrestaurant.config.UserEnrollForm;
+import com.example.myrestaurant.config.UserLoginForm;
 import com.example.myrestaurant.dto.user.domain.User;
 import com.example.myrestaurant.dto.user.repository.UserRepository;
 import com.example.myrestaurant.dto.user.service.UserService;
@@ -35,12 +36,16 @@ public class HomeController {
         return userService.findUser("test").get();
     }
 
+    @RequestMapping(value = "/login")
+    public String login(@RequestBody UserLoginForm userLoginForm) {
+        return userService.login(userLoginForm);
+    }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/greeting")
     public String greeting(@AuthenticationPrincipal User user) {
         return "hello " + user.getEmail();
     }
-
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/getLoginUserData")

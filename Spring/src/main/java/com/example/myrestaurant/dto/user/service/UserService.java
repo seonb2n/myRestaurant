@@ -1,6 +1,7 @@
 package com.example.myrestaurant.dto.user.service;
 
 import com.example.myrestaurant.config.UserEnrollForm;
+import com.example.myrestaurant.config.UserLoginForm;
 import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
 import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
 import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
@@ -54,6 +55,20 @@ public class UserService implements UserDetailsService {
     public User save(User user) {
         restaurantService.saveAll(user.getRestaurantList());
         return userRepository.save(user);
+    }
+
+    public String login(UserLoginForm userLoginForm) {
+        if(findUser(userLoginForm.getEmail()).isPresent()) {
+            User user = findUser(userLoginForm.getEmail()).get();
+            if(user.getPassword().equals(userLoginForm.getPassword())) {
+                addAuthority(user.getUserId(), "ROLE_USER");
+                return "Login Success";
+            } else {
+                return "Password is wrong";
+            }
+        }
+
+        return "Id is wrong";
     }
 
     public User enroll(UserEnrollForm userEnrollForm) {
