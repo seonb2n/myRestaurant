@@ -57,18 +57,18 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public String login(UserLoginForm userLoginForm) {
+    public User login(UserLoginForm userLoginForm) {
         if(findUser(userLoginForm.getEmail()).isPresent()) {
             User user = findUser(userLoginForm.getEmail()).get();
             if(user.getPassword().equals(userLoginForm.getPassword())) {
                 addAuthority(user.getUserId(), "ROLE_USER");
-                return "Login Success";
+                return user;
             } else {
-                return "Password is wrong";
+                throw new RuntimeException("Password is wrong");
             }
         }
 
-        return "Id is wrong";
+        throw new RuntimeException("Id is wrong");
     }
 
     public User enroll(UserEnrollForm userEnrollForm) {

@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.RetrofitService;
 import com.example.myrestaurant.dto.UserLoginForm;
+import com.example.myrestaurant.dto.LoginResponseForm;
 import com.example.myrestaurant.dto.UserResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -120,26 +120,23 @@ public class LoginActivity extends AppCompatActivity {
         String password = textViewPw.getText().toString();
 
         UserLoginForm userLoginForm = new UserLoginForm(id, password);
-        Call<String> loginTest = retrofitService.loginTest(userLoginForm);
+        Call<LoginResponseForm> loginTest = retrofitService.loginTest(userLoginForm);
 
-        loginTest.enqueue(new Callback<String>() {
+        loginTest.enqueue(new Callback<LoginResponseForm>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<LoginResponseForm> call, Response<LoginResponseForm> response) {
                 if(response.isSuccessful()) {
-                    String result = response.toString();
-                    Log.d(TAG, "onResponse: 성공, 결과 \n"+result);
+                    LoginResponseForm responseForm = response.body();
+                    Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
                 } else {
-                    Log.d(TAG, "onResponse: 실패");
+                    Log.d(TAG, "onResponse: 실패 \n" + response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<LoginResponseForm> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
-
-
-
     }
 }

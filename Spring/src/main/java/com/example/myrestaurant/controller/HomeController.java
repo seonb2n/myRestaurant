@@ -37,7 +37,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/login")
-    public String login(@RequestBody UserLoginForm userLoginForm) {
+    public User login(@RequestBody UserLoginForm userLoginForm) {
         return userService.login(userLoginForm);
     }
 
