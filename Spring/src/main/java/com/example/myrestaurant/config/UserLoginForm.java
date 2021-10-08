@@ -7,5 +7,6 @@ public class UserLoginForm {
 
     private String email;
     private String password;
+    private String refreshToken;
 
 }
