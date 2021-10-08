@@ -44,7 +44,7 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/greeting")
     public String greeting(@AuthenticationPrincipal User user) {
-        return "hello " + user.getEmail();
+        return "hello " + user.getUsername();
     }
 
     @PreAuthorize("isAuthenticated()")

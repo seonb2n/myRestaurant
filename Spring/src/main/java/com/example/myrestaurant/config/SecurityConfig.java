@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class)
+                .rememberMe();
         ;
 
     }
