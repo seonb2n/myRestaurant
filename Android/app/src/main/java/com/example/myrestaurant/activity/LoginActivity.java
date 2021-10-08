@@ -5,6 +5,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     private RetrofitService retrofitService;
     private final String BASEURL = "http://172.30.1.13:8833/";
 
+    static String loginSuccessId;
+    static String loginSuccessPw;
+    private SharedPreferences auto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonJoinWithNaver = findViewById(R.id.buttonJoinNaver);
         textViewId = findViewById(R.id.textViewId);
         textViewPw = findViewById(R.id.textViewPw);
+        auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
 
         int permissonCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
 
@@ -75,12 +82,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
-        setRetrofitInit();
+        String loginId = auto.getString("inputId", null);
+        String loginPwd = auto.getString("inputPwd", null);
+        tryLogin(loginId, loginPwd);
 
     }
 
     private void setRetrofitInit() {
-
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -113,21 +121,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void onButtonLoginClicked(View v) {
-        String sendmsg = "log_in";
-
-        String id = textViewId.getText().toString();
-        String password = textViewPw.getText().toString();
-
-        UserLoginForm userLoginForm = new UserLoginForm(id, password);
+    private void tryLogin(String id, String password) {
+        final UserLoginForm userLoginForm = new UserLoginForm(id, password);
         Call<LoginResponseForm> loginTest = retrofitService.loginTest(userLoginForm);
-
         loginTest.enqueue(new Callback<LoginResponseForm>() {
             @Override
             public void onResponse(Call<LoginResponseForm> call, Response<LoginResponseForm> response) {
                 if(response.isSuccessful()) {
                     LoginResponseForm responseForm = response.body();
                     Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
+                    SharedPreferences.Editor autoLogin = auto.edit();
+                    autoLogin.putString("inputId", userLoginForm.getEmail());
+                    autoLogin.putString("inputPwd", userLoginForm.getPassword());
+                    autoLogin.commit();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Log.d(TAG, "onResponse: 실패 \n" + response.body());
                 }
@@ -138,5 +147,13 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
+    }
+
+    public void onButtonLoginClicked(View v) {
+
+        String id = textViewId.getText().toString();
+        String password = textViewPw.getText().toString();
+
+        tryLogin(id, password);
     }
 }

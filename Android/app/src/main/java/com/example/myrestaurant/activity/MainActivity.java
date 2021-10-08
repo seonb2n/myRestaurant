@@ -52,16 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private final int searchNumber = 10;
     String[] placeData = new String[searchNumber];
     String[] linkData = new String[searchNumber];
-    BackGroundTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activiy_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler1);
-        findButton = (Button) findViewById(R.id.findButton);
-
-
+        mRecyclerView = findViewById(R.id.recycler1);
+        findButton = findViewById(R.id.findButton);
 
         //gps 기반 주소값 따오는 기능
         gpsTracker = new GpsTracker(MainActivity.this);
@@ -71,35 +68,6 @@ public class MainActivity extends AppCompatActivity {
         address = addressChanger(address);
 
         Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
-
-
-        //데이터를 카드 뷰에 넣어서 카드를 만드는 기능
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        myDataset = new ArrayList<>();
-        final MyAdapter mAdapter = new MyAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);
-
-        mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Toast.makeText(getApplicationContext(), "Click the Button!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //예시 데이타 추가
-        myDataset.add(new MyData("", R.mipmap.spaghetti, "https://place.map.kakao.com/1492599844?service=search_pc"));
-
-        findButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                task = new BackGroundTask();
-                task.execute(100);
-
-            }
-        });
-
     }
 
     public String getCurrentAddress(double latitude, double longitude) {
@@ -124,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "주소 없음", Toast.LENGTH_LONG).show();
             return "주소 미발견";
 
         }
@@ -173,60 +141,6 @@ public class MainActivity extends AppCompatActivity {
         result = address.substring(cursor, cursor + 3);
 
         return result;
-    }
-
-    class BackGroundTask extends AsyncTask<Integer, Integer, Integer> {
-
-        ProgressDialog asyncDialog;
-
-        @Override
-        protected void onPreExecute() {
-            asyncDialog = new ProgressDialog(MainActivity.this);
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("주변 맛집 찾는 중..");
-            asyncDialog.show();
-            super.onPreExecute();
-        }
-
-        protected Integer doInBackground(Integer... values) {
-            try{
-                getKakaoAPIData getKakaoAPIData = new getKakaoAPIData(address);
-                placeData = getKakaoAPIData.getAPIData();
-                for(int i = 0; i<5; i++) {
-                    linkData[i] = placeData[i+searchNumber];
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return 1;
-        }
-
-        protected void onPostExecute(Integer result) {
-            asyncDialog.dismiss();
-            super.onPostExecute(result);
-
-            mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            myDataset = new ArrayList<>();
-            final MyAdapter mAdapter = new MyAdapter(myDataset);
-            mRecyclerView.setAdapter(mAdapter);
-
-            mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getApplicationContext(), WebActivity.class);
-                    intent.putExtra("URL", linkData[position]);
-                    startActivity(intent);
-                }
-            });
-
-            for(int i = 0; i < 5; i++) {
-                myDataset.add(new MyData(placeData[i], R.mipmap.spaghetti, linkData[i]));
-            }
-
-        }
     }
 
 }

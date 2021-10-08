@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Let's Search!"
             android:textColor="#fff"
-            android:background="@drawable/button"
+            android:background="@drawable/border"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
