@@ -83,7 +83,14 @@ public class UserServiceTest extends WebIntegrationTest{
         //hello message 를 받는다.
         TestRestTemplate testClient = new TestRestTemplate("user1@naver.com", "1111");
         ResponseEntity<String> responseEntity = testClient.getForEntity(uri("/greeting"), String.class);
-        assertEquals("hello", responseEntity.getBody());
+  //      assertEquals("hello", responseEntity.getBody());
+        System.out.println(responseEntity.getBody());
+    }
+
+    @Test
+    void test_1_1() {
+        TestRestTemplate testClient = new TestRestTemplate("user1@naver.com", "1111");
+        ResponseEntity<User> responseEntity = testClient.getForEntity(uri("/login"), User.class);
         System.out.println(responseEntity.getBody());
     }
 

@@ -6,13 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginForm {
+@Builder
+public class TokenBox {
 
-    private String email;
-    private String password;
+    private String authToken;
     private String refreshToken;
 
 }
