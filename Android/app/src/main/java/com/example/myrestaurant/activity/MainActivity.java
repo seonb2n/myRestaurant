@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -185,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(View v, int position) {
                     Intent intent = new Intent(getApplicationContext(), WebActivity.class);
                     intent.putExtra("URL", linkData[position]);
+                    intent.putExtra("Restaurant", restaurantList.get(position));
                     startActivity(intent);
                 }
             });

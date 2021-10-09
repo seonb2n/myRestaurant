@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myrestaurant.R;
+import com.example.myrestaurant.dto.Restaurant;
 
 public class WebActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class WebActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         String url = intent.getStringExtra("URL");
+        Restaurant restaurant = (Restaurant) intent.getSerializableExtra("Restaurant");
+
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
