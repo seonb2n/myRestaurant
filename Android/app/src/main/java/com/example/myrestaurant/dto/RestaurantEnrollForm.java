@@ -1,11 +1,11 @@
 package com.example.myrestaurant.dto;
 
-public class Restaurant {
-
+public class RestaurantEnrollForm {
     private String name;
     private String location;
     private String link;
     private String category;
+    private String userEmail;
 
     public String getName() {
         return name;
@@ -39,4 +39,11 @@ public class Restaurant {
         this.category = category;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 }

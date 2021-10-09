@@ -19,10 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -101,6 +98,12 @@ public class UserService implements UserDetailsService {
                 save(user);
             }
         });
+    }
+
+    public List<Restaurant> addRestaurant(User user, Restaurant restaurant) {
+        user.getRestaurantList().add(restaurant);
+        List<Restaurant> restaurantList = new ArrayList<>(user.getRestaurantList());
+        return restaurantList;
     }
 
     public User addRestaurants(User user, Restaurant... restaurants) {

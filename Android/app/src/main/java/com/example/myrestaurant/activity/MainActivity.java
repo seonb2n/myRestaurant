@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrestaurant.R;
+import com.example.myrestaurant.dto.Restaurant;
 import com.example.myrestaurant.support.GpsTracker;
 import com.example.myrestaurant.support.MyAdapter;
 import com.example.myrestaurant.support.MyData;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private final int searchNumber = 10;
-    String[] placeData = new String[searchNumber];
+    List<Restaurant> restaurantList = new ArrayList<>();
     String[] linkData = new String[searchNumber];
     BackGroundTask task;
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //예시 데이타 추가
-        myDataset.add(new MyData("", R.mipmap.spaghetti, "https://place.map.kakao.com/1492599844?service=search_pc"));
+        myDataset.add(new MyData(null, R.mipmap.spaghetti, "https://place.map.kakao.com/1492599844?service=search_pc"));
 
         findButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
         protected Integer doInBackground(Integer... values) {
             try {
                 getKakaoAPIData getKakaoAPIData = new getKakaoAPIData(address);
-                placeData = getKakaoAPIData.getAPIData();
+                restaurantList = getKakaoAPIData.getAPIData();
                 for (int i = 0; i < 5; i++) {
-                    linkData[i] = placeData[i + searchNumber];
+                    linkData[i] = restaurantList.get(i).getLink();
                 }
 
             } catch (Exception e) {
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             for (int i = 0; i < 5; i++) {
-                myDataset.add(new MyData(placeData[i], R.mipmap.spaghetti, linkData[i]));
+                myDataset.add(new MyData(restaurantList.get(i), R.mipmap.spaghetti, linkData[i]));
             }
 
         }

@@ -107,10 +107,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return mDataset.size();
     }
 
-    public String getText(int position) {
-        return mDataset.get(position).text;
-    }
-
     public String getLink(int position) {return mDataset.get(position).link;}
 
 

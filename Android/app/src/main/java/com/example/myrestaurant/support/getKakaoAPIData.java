@@ -1,10 +1,18 @@
 package com.example.myrestaurant.support;
 
+import android.util.Log;
+
+import com.example.myrestaurant.dto.Restaurant;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class getKakaoAPIData {
 
@@ -12,13 +20,15 @@ public class getKakaoAPIData {
     private final String APIKEY =  "0badefdcbbc22dd6ec5c768ea1442ec5";
     private final int display = 10;
     private static String[] dataString;
+    private static List<Restaurant> restaurantList;
 
     public getKakaoAPIData(String location) {
         this.location = location;
         dataString = new String[display*2];
+        restaurantList = new ArrayList<>();
     }
 
-    public String[] getAPIData() {
+    public List<Restaurant> getAPIData() {
 
         try {
             location = URLEncoder.encode(location+" 맛집","UTF-8");
@@ -53,34 +63,41 @@ public class getKakaoAPIData {
             String[] array;
             array = data.split("\"");
 
+            System.out.println("array : " +array.toString());
+
             String[] title = new String[display];
             String[] link = new String[display];
+            String[] address = new String[display];
+            String[] category = new String[display];
 
             int k = 0;
 
             for (int i = 0; i < array.length; i++) {
-                if (array[i].equals("place_name"))
+                if (array[i].equals("address_name")) {
+                    address[k] = array[i + 2];
+                }
+                if (array[i].equals("category_name")) {
+                    category[k] = array[i + 2];
+                }
+                if (array[i].equals("place_name")){
                     title[k] = array[i + 2];
+                }
                 if (array[i].equals("place_url")) {
                     link[k] = array[i + 2];
+                    Restaurant restaurant = new Restaurant();
+                    restaurant.setCategory(category[k]);
+                    restaurant.setLocation(address[k]);
+                    restaurant.setLink(link[k]);
+                    restaurant.setName(title[k]);
+                    restaurantList.add(restaurant);
                     k++;
                 }
-            }
-
-            for(int i  = 0; i < display; i++) {
-                System.out.println(title[i]);
-                System.out.println(link[i]);
-            }
-
-            for(int i = 0; i < display; i++) {
-                dataString[i] = title[i];
-                dataString[i+display] = link[i];
             }
 
         }catch (Exception e) {
             System.out.println(e);
         }
 
-        return dataString;
+        return restaurantList;
     }
 }
