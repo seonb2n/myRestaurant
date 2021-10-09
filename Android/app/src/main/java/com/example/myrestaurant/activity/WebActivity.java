@@ -26,8 +26,8 @@ public class WebActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String url = intent.getStringExtra("URL");
         Restaurant restaurant = (Restaurant) intent.getSerializableExtra("Restaurant");
+        String url = restaurant.getLink();
 
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webView.setWebViewClient(new WebViewClient());
