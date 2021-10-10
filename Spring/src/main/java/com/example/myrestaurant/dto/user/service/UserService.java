@@ -75,6 +75,7 @@ public class UserService implements UserDetailsService {
             return userRepository.save(User.builder()
                     .email(userEnrollForm.getEmail())
                     .password(userEnrollForm.getPassword())
+                    .restaurantList(new HashSet<>())
                     .enabled(true)
                     .build()
             );
@@ -102,9 +103,12 @@ public class UserService implements UserDetailsService {
     }
 
     public List<Restaurant> addRestaurant(User user, Restaurant restaurant) {
+        if(user.getRestaurantList().stream().anyMatch(
+                r -> r.getName().equals(restaurant.getName()))) {
+            return new ArrayList<>(user.getRestaurantList());
+        }
         user.getRestaurantList().add(restaurant);
-        List<Restaurant> restaurantList = new ArrayList<>(user.getRestaurantList());
-        return restaurantList;
+        return new ArrayList<>(user.getRestaurantList());
     }
 
     public User addRestaurants(User user, Restaurant... restaurants) {

@@ -4,6 +4,7 @@ import com.example.myrestaurant.config.UserEnrollForm;
 import com.example.myrestaurant.config.UserLoginForm;
 import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
 import com.example.myrestaurant.dto.restaurant.domain.RestaurantEnrollForm;
+import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
 import com.example.myrestaurant.dto.user.domain.User;
 import com.example.myrestaurant.dto.user.repository.UserRepository;
 import com.example.myrestaurant.dto.user.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,7 @@ import java.util.List;
 public class HomeController {
 
     private final UserService userService;
+    private final RestaurantService restaurantService;
 
     @GetMapping("/")
     public String index() {
@@ -57,13 +60,14 @@ public class HomeController {
     @RequestMapping("/addRestaurant")
     public List<Restaurant> addRestaurant(@RequestBody RestaurantEnrollForm enrollForm) {
         User user = userService.findUser(enrollForm.getUserEmail()).get();
-        return userService.addRestaurant(user ,Restaurant.builder()
-                .user(user)
-                .category(enrollForm.getCategory())
+        Restaurant restaurant = Restaurant.builder()
                 .name(enrollForm.getName())
                 .link(enrollForm.getLink())
                 .location(enrollForm.getLocation())
-                .build());
+                .build();
+        userService.addRestaurant(user, restaurant);
+        System.out.println(userService.getRestaurants(user));
+        return new ArrayList<>(userService.getRestaurants(user));
     }
 
     @PreAuthorize("isAuthenticated()")

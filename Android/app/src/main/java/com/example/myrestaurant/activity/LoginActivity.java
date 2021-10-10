@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
-    private Retrofit retrofit;
-    private RetrofitService retrofitService;
+    static Retrofit retrofit;
+    static RetrofitService retrofitService;
     private final String BASEURL = "http://172.30.1.13:8833/";
 
     private SharedPreferences auto;

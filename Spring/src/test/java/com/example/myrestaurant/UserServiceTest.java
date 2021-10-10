@@ -105,6 +105,16 @@ public class UserServiceTest extends WebIntegrationTest{
         System.out.println(userService.findUser("user1@naver.com"));
     }
 
+    @Test
+    void test_2_2() {
+        //user service 테스트
+        User user2 = userRepository.findUserByEmail("user2@naver.com").get();
+        Restaurant r1 = Restaurant.builder().name("장인족발").build();
+        userService.addRestaurant(user2, r1);
+
+        System.out.println(userService.findUser("user2@naver.com"));
+    }
+
     @DisplayName("User 와 Restaurant DB 에 대한 테스트")
     @Test
     void test_3() {

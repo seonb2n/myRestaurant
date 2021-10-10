@@ -7,6 +7,14 @@ public class RestaurantEnrollForm {
     private String category;
     private String userEmail;
 
+    public RestaurantEnrollForm(String name, String location, String link, String category, String userEmail) {
+        this.name = name;
+        this.location = location;
+        this.link = link;
+        this.category = category;
+        this.userEmail = userEmail;
+    }
+
     public String getName() {
         return name;
     }
