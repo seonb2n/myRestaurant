@@ -1,5 +1,6 @@
 package com.example.myrestaurant.dto.user.domain;
 
+import com.example.myrestaurant.config.TokenBox;
 import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;

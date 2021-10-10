@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.example.myrestaurant.dto.user.domain.User;
 import com.example.myrestaurant.dto.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

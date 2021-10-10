@@ -10,9 +10,11 @@ import com.example.myrestaurant.dto.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -47,8 +49,8 @@ public class HomeController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/greeting")
-    public String greeting(@AuthenticationPrincipal User user) {
-        return "hello " + user.getUsername();
+    public String greeting(Authentication authentication, Principal principal) {
+        return "hello " + authentication.getName();
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -59,6 +59,7 @@ public class UserService implements UserDetailsService {
             User user = findUser(userLoginForm.getEmail()).get();
             if(user.getPassword().equals(userLoginForm.getPassword())) {
                 addAuthority(user.getUserId(), "ROLE_USER");
+
                 return user;
             } else {
                 throw new RuntimeException("Password is wrong");

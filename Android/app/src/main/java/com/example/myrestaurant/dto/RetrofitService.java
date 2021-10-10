@@ -1,5 +1,7 @@
 package com.example.myrestaurant.dto;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -11,5 +13,8 @@ public interface RetrofitService {
     Call<UserResult> getUser();
 
     @POST("/login")
-    Call<LoginResponseForm> loginTest(@Body UserLoginForm userLoginForm);
+    Call<LoginResponseForm> logIn(@Body UserLoginForm userLoginForm);
+
+    @POST("/addRestaurant")
+    Call<List<Restaurant>> addRestaurant(@Body RestaurantEnrollForm restaurantEnrollForm);
 }

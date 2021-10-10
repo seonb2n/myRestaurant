@@ -23,7 +23,6 @@ import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.RetrofitService;
 import com.example.myrestaurant.dto.UserLoginForm;
 import com.example.myrestaurant.dto.LoginResponseForm;
-import com.example.myrestaurant.dto.UserResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -107,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String loginId = auto.getString("inputId", null);
         String loginPwd = auto.getString("inputPwd", null);
+        String authToken = auto.getString("authToken", null);
+        String refreshToken = auto.getString("refreshToken", null);
         if(loginId != null && loginPwd != null) {
             tryLogin(loginId, loginPwd);
         }
@@ -115,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void tryLogin(String id, String password) {
         final UserLoginForm userLoginForm = new UserLoginForm(id, password);
-        Call<LoginResponseForm> loginTest = retrofitService.loginTest(userLoginForm);
+        Call<LoginResponseForm> loginTest = retrofitService.logIn(userLoginForm);
         loginTest.enqueue(new Callback<LoginResponseForm>() {
             @Override
             public void onResponse(Call<LoginResponseForm> call, Response<LoginResponseForm> response) {
@@ -123,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponseForm responseForm = response.body();
                     Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
                     SharedPreferences.Editor autoLogin = auto.edit();
+                    autoLogin.putString("authToken", response.headers().get("auth_token"));
+                    autoLogin.putString("refreshToken", response.headers().get("refresh_Token"));
                     autoLogin.putString("inputId", userLoginForm.getEmail());
                     autoLogin.putString("inputPwd", userLoginForm.getPassword());
                     autoLogin.commit();

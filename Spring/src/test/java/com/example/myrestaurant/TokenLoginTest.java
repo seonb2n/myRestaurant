@@ -87,7 +87,7 @@ public class TokenLoginTest extends WebIntegrationTest{
                 .build();
     }
 
-    @DisplayName("1. 가져온 토큰을 통해서, login을 실시한다.")
+    @DisplayName("1. 가져온 토큰을 통해서, greeting 을 실시한다.")
     @Test
     void test_1() {
         TokenBox token = getToken();
@@ -97,7 +97,7 @@ public class TokenLoginTest extends WebIntegrationTest{
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.AUTHORIZATION, "Bearer " + token.getAuthToken());
         HttpEntity body = new HttpEntity<>(null, header);
-        ResponseEntity<User> resp2 = client.exchange(uri("/login"), HttpMethod.POST, body, User.class);
+        ResponseEntity<String> resp2 = client.exchange(uri("/greeting"), HttpMethod.POST, body, String.class);
         System.out.println(resp2.getBody());
     }
 }

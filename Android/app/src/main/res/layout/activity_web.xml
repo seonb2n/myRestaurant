@@ -23,6 +23,7 @@
             app:fabSize="normal"
             android:elevation="6dp"
             android:background="@drawable/border"
+            android:backgroundTint="@color/colorOrange"
             android:src="@drawable/ic_add_black"
             />
 
