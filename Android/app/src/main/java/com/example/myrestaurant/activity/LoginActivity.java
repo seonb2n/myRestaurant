@@ -106,8 +106,6 @@ public class LoginActivity extends AppCompatActivity {
 
         String loginId = auto.getString("inputId", null);
         String loginPwd = auto.getString("inputPwd", null);
-        String authToken = auto.getString("authToken", null);
-        String refreshToken = auto.getString("refreshToken", null);
         if(loginId != null && loginPwd != null) {
             tryLogin(loginId, loginPwd);
         }

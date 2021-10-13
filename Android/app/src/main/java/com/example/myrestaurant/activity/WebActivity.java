@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,8 +70,6 @@ public class WebActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-                // Restaurant 를 서버에 추가
 
                 RestaurantEnrollForm restaurantEnrollForm = new RestaurantEnrollForm(
                         restaurant.getName(),
@@ -84,12 +83,12 @@ public class WebActivity extends AppCompatActivity {
 
                 Call<List<Restaurant>> enrollRestaurant = retrofitService.addRestaurant(authToken, restaurantEnrollForm);
 
-
                 enrollRestaurant.enqueue(new Callback<List<Restaurant>>() {
                     @Override
                     public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
                         if(response.isSuccessful()) {
                             Log.d(TAG, "onResponse: 성공, 결과 \n"+response.body());
+                            Toast.makeText(WebActivity.this, "나의 맛집 리스트에 추가됐습니다!", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d(TAG, "onResponse: 실패");
                         }
