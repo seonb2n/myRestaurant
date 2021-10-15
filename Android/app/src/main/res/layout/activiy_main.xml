@@ -40,6 +40,18 @@
             android:layout_marginRight="20dp"
             />
 
+        <Button
+            android:id="@+id/restaurantButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="See my Restaurant"
+            android:textColor="#fff"
+            android:background="@drawable/border"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<MyData> myDataset;
     private Button findButton;
+    private Button restaurantButton;
 
     private GpsTracker gpsTracker;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activiy_main);
         mRecyclerView = findViewById(R.id.recycler1);
         findButton = findViewById(R.id.findButton);
+        restaurantButton = findViewById(R.id.restaurantButton);
 
         gpsTracker = new GpsTracker(MainActivity.this);
         double latitude = gpsTracker.getLatitude();
@@ -91,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 task = new BackGroundTask();
                 task.execute(100);
+
+            }
+        });
+
+        restaurantButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
