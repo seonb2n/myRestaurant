@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
         restaurantButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), MyRestaurantActivity.class);
+                startActivity(intent);
             }
         });
     }

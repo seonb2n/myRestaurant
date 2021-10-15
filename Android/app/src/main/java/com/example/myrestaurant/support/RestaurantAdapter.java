@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
-    private ArrayList<Restaurant> restaurantArrayList;
+    private List<Restaurant> restaurantArrayList;
     private WebSettings mWebSettings;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -39,7 +39,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     //TODO
     //데이터를 바탕으로 카드뷰를 생성할 수 있도록 구현
 
-    public RestaurantAdapter(ArrayList<Restaurant> myRestaurants) {
+    public RestaurantAdapter(List<Restaurant> myRestaurants) {
         restaurantArrayList = myRestaurants;
     }
 
