@@ -76,4 +76,10 @@ public class HomeController {
         return userService.findUser(user.getEmail()).get();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/getRestaurantList")
+    public List<Restaurant> getRestaurantList(Authentication authentication, Principal principal) {
+        User user = userService.findUser(authentication.getName()).get();
+        return new ArrayList<>(userService.getRestaurants(user));
+    }
 }

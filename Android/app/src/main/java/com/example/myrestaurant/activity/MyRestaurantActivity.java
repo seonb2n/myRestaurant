@@ -32,7 +32,7 @@ public class MyRestaurantActivity extends AppCompatActivity {
         //TODO
         //restaurant List 가 내가 like 한 레스토랑 객체 불러 올 수 있도록 구현
 
-
+        
 
     }
 }
