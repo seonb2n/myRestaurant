@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -69,6 +70,20 @@ public class HomeController {
         userService.addRestaurant(user, restaurant);
         System.out.println(userService.getRestaurants(user));
         return new ArrayList<>(userService.getRestaurants(user));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/deleteRestaurant")
+    public void deleteRestaurant(@RequestBody RestaurantEnrollForm enrollForm) {
+        User user = userService.findUser(enrollForm.getUserEmail()).get();
+        Optional<Restaurant> restaurant = restaurantService.findByName(enrollForm.getName());
+        if(restaurant.isPresent()) {
+            userService.deleteRestaurant(user, restaurant.get());
+        }
+        else {
+            System.out.println(enrollForm.getName() + " is not exist");
+        }
+
     }
 
     @PreAuthorize("isAuthenticated()")

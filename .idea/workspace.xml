@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e33064e-9780-401b-b2ea-caf307f2c274" name="Default Changelist" comment="" />
+    <list default="true" id="9e33064e-9780-401b-b2ea-caf307f2c274" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Android/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Android/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/activity/MyRestaurantActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/activity/MyRestaurantActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/dto/RetrofitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/dto/RetrofitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/support/MyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/support/MyAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/support/RestaurantAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Android/app/src/main/java/com/example/myrestaurant/support/RestaurantAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Android/app/src/main/res/layout/recyclerview_item_restaurant.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Android/app/src/main/res/layout/recyclerview_item_restaurant.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/src/main/java/com/example/myrestaurant/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/src/main/java/com/example/myrestaurant/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/src/main/java/com/example/myrestaurant/dto/restaurant/respository/RestaurantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/src/main/java/com/example/myrestaurant/dto/restaurant/respository/RestaurantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/src/main/java/com/example/myrestaurant/dto/restaurant/service/RestaurantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/src/main/java/com/example/myrestaurant/dto/restaurant/service/RestaurantService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1yoGgb8jOqnnjqLl8XFzIzpDbuh" />
   <component name="ProjectViewState">
@@ -32,9 +45,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="506" y="309" key="FileChooserDialogImpl" timestamp="1632910659099">
+    <state x="506" y="309" key="FileChooserDialogImpl" timestamp="1635652219159">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="506" y="309" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1632910659099" />
+    <state x="506" y="309" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1635652219159" />
   </component>
 </project>

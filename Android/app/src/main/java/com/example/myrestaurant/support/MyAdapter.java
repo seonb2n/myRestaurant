@@ -37,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
+                    int pos = getAbsoluteAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION) {
                         if(mListener != null) {
                             mListener.onItemClick(v, pos);

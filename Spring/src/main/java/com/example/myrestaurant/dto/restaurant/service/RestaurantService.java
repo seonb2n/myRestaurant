@@ -31,6 +31,10 @@ public class RestaurantService {
         return repository.findById(id);
     }
 
+    public Optional<Restaurant> findByName(String name) {
+        return repository.findRestaurantByName(name);
+    }
+
     public List<Restaurant> saveAll(Set<Restaurant> restaurants) {
         return repository.saveAll(restaurants);
     }

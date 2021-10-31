@@ -1,9 +1,11 @@
 package com.example.myrestaurant.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
+import com.example.myrestaurant.support.MyAdapter;
 import com.example.myrestaurant.support.RestaurantAdapter;
 
 import static android.content.ContentValues.TAG;
@@ -53,6 +56,15 @@ public class MyRestaurantActivity extends AppCompatActivity {
                     mRecyclerView.setLayoutManager(mLayoutManager);
                     final RestaurantAdapter restaurantAdapter = new RestaurantAdapter(restaurantList);
                     mRecyclerView.setAdapter(restaurantAdapter);
+
+                    restaurantAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View v, int position) {
+                            Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+                            intent.putExtra("Restaurant", restaurantList.get(position));
+                            startActivity(intent);
+                        }
+                    });
 
                 } else {
                     Log.d(TAG, "onResponse: 실패");

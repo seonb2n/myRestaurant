@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,14 @@ import java.util.List;
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
     private List<Restaurant> restaurantArrayList;
     private WebSettings mWebSettings;
+    private RestaurantAdapter.OnItemClickListener mListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
         public TextView textViewName;
         public TextView textViewCategory;
         public TextView textViewLocation;
+        public Button cardViewButton;
 
         public ViewHolder(final View view) {
             super(view);
@@ -32,12 +35,22 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             textViewName = view.findViewById(R.id.card_view_name);
             textViewCategory = view.findViewById(R.id.card_view_category);
             textViewLocation = view.findViewById(R.id.card_view_location);
+            cardViewButton = (Button) view.findViewById(R.id.restaurantViewButton);
+
+            cardViewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAbsoluteAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        if(mListener != null) {
+                            mListener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
+
         }
     }
-
-
-    //TODO
-    //데이터를 바탕으로 카드뷰를 생성할 수 있도록 구현
 
     public RestaurantAdapter(List<Restaurant> myRestaurants) {
         restaurantArrayList = myRestaurants;
@@ -63,5 +76,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         return restaurantArrayList.size();
     }
 
+    //클릭 이벤트 구현
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    public void setOnItemClickListener(RestaurantAdapter.OnItemClickListener listener) {
+        this.mListener = listener;
+    }
 
 }
