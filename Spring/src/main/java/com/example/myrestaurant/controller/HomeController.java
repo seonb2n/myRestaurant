@@ -63,6 +63,7 @@ public class HomeController {
         Restaurant restaurant = Restaurant.builder()
                 .name(enrollForm.getName())
                 .link(enrollForm.getLink())
+                .category(enrollForm.getCategory())
                 .location(enrollForm.getLocation())
                 .build();
         userService.addRestaurant(user, restaurant);

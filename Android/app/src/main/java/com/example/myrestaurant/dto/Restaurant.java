@@ -41,4 +41,13 @@ public class Restaurant implements Serializable {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", link='" + link + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
 }

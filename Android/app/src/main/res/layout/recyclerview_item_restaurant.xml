@@ -20,35 +20,50 @@
         app:cardBackgroundColor="#FFBB00"
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:background="@color/colorWhite"
-            android:orientation="vertical"
             >
 
-            <TextView
-                android:id="@+id/card_view_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/card_view_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/card_view_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/card_view_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/restaurantViewButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
                 />
 
-            <TextView
-                android:id="@+id/card_view_category"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/card_view_location"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
-        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

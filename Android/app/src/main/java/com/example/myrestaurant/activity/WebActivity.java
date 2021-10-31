@@ -55,6 +55,8 @@ public class WebActivity extends AppCompatActivity {
 
         final Restaurant restaurant = (Restaurant) intent.getSerializableExtra("Restaurant");
         String url = restaurant.getLink();
+        Log.d(TAG, ">>> " + restaurant.toString());
+
         auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
 
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);

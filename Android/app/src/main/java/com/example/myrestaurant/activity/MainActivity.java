@@ -36,6 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.http.Tag;
+
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -172,7 +176,10 @@ public class MainActivity extends AppCompatActivity {
                 restaurantList = getKakaoAPIData.getAPIData();
                 for (int i = 0; i < 5; i++) {
                     linkData[i] = restaurantList.get(i).getLink();
+                    String category = restaurantList.get(i).getCategory().replaceAll("[u]003e", "");
+                    restaurantList.get(i).setCategory(category);
                 }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
