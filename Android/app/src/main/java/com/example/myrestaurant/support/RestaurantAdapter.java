@@ -17,7 +17,8 @@ import com.example.myrestaurant.dto.Restaurant;
 
 import java.util.List;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
+public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>
+        implements ItemTouchHelperListener{
     private List<Restaurant> restaurantArrayList;
     private WebSettings mWebSettings;
     private RestaurantAdapter.OnItemClickListener mListener;
@@ -84,5 +85,32 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     public void setOnItemClickListener(RestaurantAdapter.OnItemClickListener listener) {
         this.mListener = listener;
     }
+
+    @Override
+    public boolean onItemMove(int from_position, int to_position) {
+        Restaurant restaurant = restaurantArrayList.get(from_position);
+        restaurantArrayList.remove(from_position);
+        restaurantArrayList.add(to_position, restaurant);
+        notifyItemMoved(from_position, to_position);
+        return true;
+    }
+
+    @Override
+    public void onItemSwipe(int position) {
+        restaurantArrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onLeftClick(int position, RecyclerView.ViewHolder viewHolder) {
+
+    }
+
+    @Override
+    public void onRightClick(int position, RecyclerView.ViewHolder viewHolder) {
+        restaurantArrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
 
 }

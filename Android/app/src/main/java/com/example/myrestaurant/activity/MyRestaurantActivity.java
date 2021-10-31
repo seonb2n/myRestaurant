@@ -3,17 +3,21 @@ package com.example.myrestaurant.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
+import com.example.myrestaurant.support.ItemTouchHelperCallback;
 import com.example.myrestaurant.support.MyAdapter;
 import com.example.myrestaurant.support.RestaurantAdapter;
 
@@ -33,6 +37,7 @@ public class MyRestaurantActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Restaurant> restaurantList = new ArrayList<>();
     SharedPreferences auto;
+    ItemTouchHelper itemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class MyRestaurantActivity extends AppCompatActivity {
                     final RestaurantAdapter restaurantAdapter = new RestaurantAdapter(restaurantList);
                     mRecyclerView.setAdapter(restaurantAdapter);
 
+                    itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(restaurantAdapter));
+                    itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
                     restaurantAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View v, int position) {
@@ -65,6 +73,9 @@ public class MyRestaurantActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+
+
+
 
                 } else {
                     Log.d(TAG, "onResponse: 실패");
@@ -77,5 +88,14 @@ public class MyRestaurantActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setUpRecyclerView() {
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                itemTouchHelper.onDraw(c, parent, state);
+            }
+        });
     }
 }
