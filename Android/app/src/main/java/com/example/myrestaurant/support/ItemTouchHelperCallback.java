@@ -108,6 +108,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
         c.drawText(text, button.centerX() - (textWidth / 2), button.centerY() + (textSize/2), p);
     }
 
+    //
     @Override
     public int convertToAbsoluteDirection(int flags, int layoutDirection) {
         if(swipeBack) {
