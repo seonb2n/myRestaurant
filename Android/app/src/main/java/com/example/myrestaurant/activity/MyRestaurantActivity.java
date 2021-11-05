@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
-import com.example.myrestaurant.support.ItemTouchHelperCallback;
 import com.example.myrestaurant.support.MyAdapter;
 import com.example.myrestaurant.support.RestaurantAdapter;
+import com.example.myrestaurant.support.SwipeHelper;
+
 import static android.content.ContentValues.TAG;
 import static com.example.myrestaurant.activity.LoginActivity.retrofitService;
 
@@ -61,8 +63,22 @@ public class MyRestaurantActivity extends AppCompatActivity {
                     final RestaurantAdapter restaurantAdapter = new RestaurantAdapter(restaurantList);
                     mRecyclerView.setAdapter(restaurantAdapter);
 
-                    itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(restaurantAdapter));
-                    itemTouchHelper.attachToRecyclerView(mRecyclerView);
+                    SwipeHelper swipeHelper = new SwipeHelper(getApplicationContext(), mRecyclerView) {
+                        @Override
+                        public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                                  underlayButtons.add(new SwipeHelper.UnderlayButton(
+                                          "Delete",
+                                          0,
+                                          Color.parseColor("#FF3C30"),
+                                          new SwipeHelper.UnderlayButtonClickListener() {
+                                              @Override
+                                              public void onClick(int pos) {
+                                                  //TODO : onDelete
+                                              }
+                                          }
+                                  ));
+                        }
+                    };
 
                     restaurantAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
                         @Override
