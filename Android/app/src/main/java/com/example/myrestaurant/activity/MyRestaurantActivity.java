@@ -20,8 +20,6 @@ import com.example.myrestaurant.dto.Restaurant;
 import com.example.myrestaurant.support.ItemTouchHelperCallback;
 import com.example.myrestaurant.support.MyAdapter;
 import com.example.myrestaurant.support.RestaurantAdapter;
-import com.example.myrestaurant.support.SwipeController;
-
 import static android.content.ContentValues.TAG;
 import static com.example.myrestaurant.activity.LoginActivity.retrofitService;
 
@@ -63,12 +61,8 @@ public class MyRestaurantActivity extends AppCompatActivity {
                     final RestaurantAdapter restaurantAdapter = new RestaurantAdapter(restaurantList);
                     mRecyclerView.setAdapter(restaurantAdapter);
 
-                    SwipeController swipeController = new SwipeController();
-                    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+                    itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(restaurantAdapter));
                     itemTouchHelper.attachToRecyclerView(mRecyclerView);
-
-//                    itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(restaurantAdapter));
-//                    itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
                     restaurantAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
                         @Override
