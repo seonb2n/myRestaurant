@@ -17,22 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
 import com.example.myrestaurant.dto.RestaurantEnrollForm;
-import com.example.myrestaurant.dto.RetrofitService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+
 import static android.content.ContentValues.TAG;
 
-import static com.example.myrestaurant.activity.LoginActivity.retrofit;
 import static com.example.myrestaurant.activity.LoginActivity.retrofitService;
 
 public class WebActivity extends AppCompatActivity {

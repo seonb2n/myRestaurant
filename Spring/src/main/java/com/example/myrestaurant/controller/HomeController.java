@@ -74,16 +74,10 @@ public class HomeController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/deleteRestaurant")
-    public void deleteRestaurant(@RequestBody RestaurantEnrollForm enrollForm) {
-        User user = userService.findUser(enrollForm.getUserEmail()).get();
-        Optional<Restaurant> restaurant = restaurantService.findByName(enrollForm.getName());
-        if(restaurant.isPresent()) {
-            userService.deleteRestaurant(user, restaurant.get());
-        }
-        else {
-            System.out.println(enrollForm.getName() + " is not exist");
-        }
-
+    public List<Restaurant> deleteRestaurant(Authentication authentication, @RequestBody String name) {
+        User user = userService.findUser(authentication.getName()).get();
+        userService.deleteRestaurant(user, userService.getRestaurantByName(user, name));
+        return new ArrayList<>(userService.getRestaurants(user));
     }
 
     @PreAuthorize("isAuthenticated()")

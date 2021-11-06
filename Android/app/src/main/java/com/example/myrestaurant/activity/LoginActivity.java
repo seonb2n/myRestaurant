@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myrestaurant.R;
-import com.example.myrestaurant.dto.RetrofitService;
+import com.example.myrestaurant.support.RetrofitService;
 import com.example.myrestaurant.dto.UserLoginForm;
 import com.example.myrestaurant.dto.LoginResponseForm;
 import com.google.gson.Gson;

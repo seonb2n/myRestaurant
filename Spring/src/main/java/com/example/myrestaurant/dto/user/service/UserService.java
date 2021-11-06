@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -126,9 +127,20 @@ public class UserService implements UserDetailsService {
                 return restaurantService.findById(id).get();
             }
         }
-
         return null;
     }
+
+    public Restaurant getRestaurantByName(User user, String name) {
+        Restaurant r = getRestaurants(user).stream().filter(str
+                -> str.getName().equals(name)).collect(Collectors.toList()).get(0);
+        if(r != null) {
+            return  r;
+        } else {
+            System.out.println("Error : Cant find restaurant in DB");
+            return null;
+        }
+    }
+
 
     public void deleteRestaurant(User user, Restaurant restaurant) {
         if(getRestaurants(user).contains(restaurant)) {

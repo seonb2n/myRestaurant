@@ -1,4 +1,10 @@
-package com.example.myrestaurant.dto;
+package com.example.myrestaurant.support;
+
+import com.example.myrestaurant.dto.LoginResponseForm;
+import com.example.myrestaurant.dto.Restaurant;
+import com.example.myrestaurant.dto.RestaurantEnrollForm;
+import com.example.myrestaurant.dto.UserLoginForm;
+import com.example.myrestaurant.dto.UserResult;
 
 import java.util.List;
 
@@ -20,7 +26,7 @@ public interface RetrofitService {
     Call<List<Restaurant>> addRestaurant(@Header("Authorization") String token, @Body RestaurantEnrollForm restaurantEnrollForm);
 
     @POST("deleteRestaurant")
-    Call<Void> deleteRestaurant(@Header("Authorization") String token, @Body RestaurantEnrollForm restaurantEnrollForm);
+    Call<List<Restaurant>> deleteRestaurant(@Header("Authorization") String token, @Body String name);
 
     @GET("/getRestaurantList")
     Call<List<Restaurant>> getRestaurantList(@Header("Authorization") String token);
