@@ -17,8 +17,7 @@ import com.example.myrestaurant.dto.Restaurant;
 
 import java.util.List;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>
-        implements ItemTouchHelperListener{
+public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> implements ItemTouchHelperListener{
     private List<Restaurant> restaurantArrayList;
     private WebSettings mWebSettings;
     private RestaurantAdapter.OnItemClickListener mListener;
@@ -111,6 +110,5 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         restaurantArrayList.remove(position);
         notifyItemRemoved(position);
     }
-
 
 }

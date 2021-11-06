@@ -65,7 +65,7 @@ public class MyRestaurantActivity extends AppCompatActivity {
                     if(response.body() != null) {
                         restaurantList = response.body();
                     }
-                    RestaurantAdapter restaurantAdapter = new RestaurantAdapter(restaurantList);
+                    final RestaurantAdapter restaurantAdapter = new RestaurantAdapter(restaurantList);
                     mRecyclerView.setAdapter(restaurantAdapter);
                     restaurantAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
                         @Override
@@ -75,6 +75,26 @@ public class MyRestaurantActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+
+                    SwipeHelper swipeHelper = new SwipeHelper(getApplicationContext(), mRecyclerView) {
+                        @Override
+                        public void instantiateUnderlayButton(final RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                            underlayButtons.add(new SwipeHelper.UnderlayButton(
+                                    "Delete",
+                                    0,
+                                    Color.parseColor("#FF3C30"),
+                                    new SwipeHelper.UnderlayButtonClickListener() {
+                                        @Override
+                                        public void onClick(int pos) {
+                                            //TODO : onDelete
+                                            deleteRestaurant(restaurantList.get(pos), authToken);
+                                            restaurantList.remove(pos);
+                                            restaurantAdapter.notifyItemRemoved(pos);
+                                        }
+                                    }
+                            ));
+                        }
+                    };
 
                 } else {
                     Log.d(TAG, "onResponse: 실패");
@@ -91,24 +111,7 @@ public class MyRestaurantActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(MyRestaurantActivity.this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        SwipeHelper swipeHelper = new SwipeHelper(getApplicationContext(), mRecyclerView) {
-            @Override
-            public void instantiateUnderlayButton(final RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
-                underlayButtons.add(new SwipeHelper.UnderlayButton(
-                        "Delete",
-                        0,
-                        Color.parseColor("#FF3C30"),
-                        new SwipeHelper.UnderlayButtonClickListener() {
-                            @Override
-                            public void onClick(int pos) {
-                                //TODO : onDelete
-                                deleteRestaurant(restaurantList.get(pos), authToken);
-                                restaurantList.remove(pos);
-                            }
-                        }
-                ));
-            }
-        };
+
     }
 
     private void deleteRestaurant(Restaurant restaurant, String token) {
@@ -119,8 +122,6 @@ public class MyRestaurantActivity extends AppCompatActivity {
         deleteRestaurant.enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
-                Log.d(TAG, "onResponse: 성공, 결과 \n"+response.body());
-
             }
 
             @Override
