@@ -1,19 +1,17 @@
-package com.example.myrestaurant.dto.user.service;
+package com.example.myrestaurant.infrastructure.user;
 
-import com.example.myrestaurant.config.UserEnrollForm;
-import com.example.myrestaurant.config.UserLoginForm;
-import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
-import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
-import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
-import com.example.myrestaurant.dto.user.domain.User;
-import com.example.myrestaurant.dto.user.domain.UserAuthority;
-import com.example.myrestaurant.dto.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.myrestaurant.common.config.UserEnrollForm;
+import com.example.myrestaurant.common.config.UserLoginForm;
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
+import com.example.myrestaurant.infrastructure.restaurant.RestaurantServiceImpl;
+import com.example.myrestaurant.domain.user.domain.User;
+import com.example.myrestaurant.domain.user.domain.UserAuthority;
+import com.example.myrestaurant.domain.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,16 +22,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UserService implements UserDetailsService {
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private RestaurantService restaurantService;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final RestaurantServiceImpl restaurantService;
 
     @Bean
     PasswordEncoder passwordEncoder() {

@@ -1,10 +1,9 @@
-package com.example.myrestaurant.dto.restaurant.respository;
+package com.example.myrestaurant.domain.restaurant.respository;
 
-import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository

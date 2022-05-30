@@ -1,13 +1,10 @@
-package com.example.myrestaurant.config;
+package com.example.myrestaurant.common.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.myrestaurant.dto.user.domain.User;
-import com.example.myrestaurant.dto.user.service.UserService;
-import io.jsonwebtoken.Jwts;
+import com.example.myrestaurant.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

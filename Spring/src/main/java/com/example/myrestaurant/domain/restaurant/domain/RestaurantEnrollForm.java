@@ -1,9 +1,6 @@
-package com.example.myrestaurant.dto.restaurant.domain;
+package com.example.myrestaurant.domain.restaurant.domain;
 
-import com.example.myrestaurant.dto.user.domain.User;
 import lombok.*;
-
-import javax.persistence.ManyToOne;
 
 @Data
 @NoArgsConstructor

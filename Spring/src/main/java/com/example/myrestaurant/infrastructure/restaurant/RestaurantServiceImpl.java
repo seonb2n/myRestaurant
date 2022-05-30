@@ -1,7 +1,7 @@
-package com.example.myrestaurant.dto.restaurant.service;
+package com.example.myrestaurant.infrastructure.restaurant;
 
-import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
-import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
+import com.example.myrestaurant.domain.restaurant.respository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,11 +9,11 @@ import java.util.*;
 
 @Service
 @Transactional
-public class RestaurantService {
+public class RestaurantServiceImpl {
 
     private final RestaurantRepository repository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository) {
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
         this.repository = restaurantRepository;
     }
 

@@ -1,21 +1,17 @@
 package com.example.myrestaurant;
 
-import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
-import com.example.myrestaurant.dto.restaurant.respository.RestaurantRepository;
-import com.example.myrestaurant.dto.user.domain.User;
-import com.example.myrestaurant.dto.user.repository.UserRepository;
-import com.example.myrestaurant.dto.user.service.UserService;
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
+import com.example.myrestaurant.domain.user.domain.User;
+import com.example.myrestaurant.domain.user.repository.UserRepository;
+import com.example.myrestaurant.infrastructure.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +22,7 @@ public class UserServiceTest extends WebIntegrationTest{
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     
     private String greetingUrl() {
         return "http://localhost:"+port+"/greeting";

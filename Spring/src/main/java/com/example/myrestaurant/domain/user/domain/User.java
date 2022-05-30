@@ -1,14 +1,11 @@
-package com.example.myrestaurant.dto.user.domain;
+package com.example.myrestaurant.domain.user.domain;
 
-import com.example.myrestaurant.config.TokenBox;
-import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 @Data

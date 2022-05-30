@@ -1,15 +1,13 @@
-package com.example.myrestaurant.controller;
+package com.example.myrestaurant.interfaces.user.controller;
 
-import com.example.myrestaurant.config.UserEnrollForm;
-import com.example.myrestaurant.config.UserLoginForm;
-import com.example.myrestaurant.dto.restaurant.domain.Restaurant;
-import com.example.myrestaurant.dto.restaurant.domain.RestaurantEnrollForm;
-import com.example.myrestaurant.dto.restaurant.service.RestaurantService;
-import com.example.myrestaurant.dto.user.domain.User;
-import com.example.myrestaurant.dto.user.repository.UserRepository;
-import com.example.myrestaurant.dto.user.service.UserService;
+import com.example.myrestaurant.common.config.UserEnrollForm;
+import com.example.myrestaurant.common.config.UserLoginForm;
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
+import com.example.myrestaurant.domain.restaurant.domain.RestaurantEnrollForm;
+import com.example.myrestaurant.infrastructure.restaurant.RestaurantServiceImpl;
+import com.example.myrestaurant.domain.user.domain.User;
+import com.example.myrestaurant.infrastructure.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,20 +16,20 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final UserService userService;
-    private final RestaurantService restaurantService;
+    private final UserServiceImpl userService;
+    private final RestaurantServiceImpl restaurantService;
 
     @GetMapping("/")
     public String index() {
         return "Connect";
     }
 
+    //TODO 사용자 회원가입 구현
     @RequestMapping("/userEnroll")
     public User userEnroll() {
         UserEnrollForm form1 = UserEnrollForm.builder()
