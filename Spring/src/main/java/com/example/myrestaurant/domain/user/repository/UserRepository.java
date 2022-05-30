@@ -1,6 +1,6 @@
-package com.example.myrestaurant.dto.user.repository;
+package com.example.myrestaurant.domain.user.repository;
 
-import com.example.myrestaurant.dto.user.domain.User;
+import com.example.myrestaurant.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

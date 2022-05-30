@@ -1,4 +1,4 @@
-package com.example.myrestaurant.dto.user.domain;
+package com.example.myrestaurant.domain.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

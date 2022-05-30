@@ -1,4 +1,4 @@
-package com.example.myrestaurant.config;
+package com.example.myrestaurant.common.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

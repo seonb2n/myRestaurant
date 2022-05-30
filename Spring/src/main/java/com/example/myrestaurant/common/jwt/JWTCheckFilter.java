@@ -1,8 +1,8 @@
-package com.example.myrestaurant.config;
+package com.example.myrestaurant.common.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.myrestaurant.dto.user.domain.User;
-import com.example.myrestaurant.dto.user.service.UserService;
+import com.example.myrestaurant.domain.user.domain.User;
+import com.example.myrestaurant.infrastructure.user.UserServiceImpl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,9 +17,9 @@ import java.io.IOException;
 
 public class JWTCheckFilter extends BasicAuthenticationFilter {
 
-    private UserService userService;
+    private UserServiceImpl userService;
 
-    public JWTCheckFilter(AuthenticationManager authenticationManager, UserService userService) {
+    public JWTCheckFilter(AuthenticationManager authenticationManager, UserServiceImpl userService) {
         super(authenticationManager);
         this.userService = userService;
     }

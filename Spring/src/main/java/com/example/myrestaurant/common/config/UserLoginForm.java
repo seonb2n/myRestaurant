@@ -1,4 +1,4 @@
-package com.example.myrestaurant.config;
+package com.example.myrestaurant.common.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class TokenBox {
+public class UserLoginForm {
 
-    private String authToken;
+    private String email;
+    private String password;
     private String refreshToken;
 
 }

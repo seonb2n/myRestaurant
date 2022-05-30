@@ -1,11 +1,10 @@
-package com.example.myrestaurant.config;
+package com.example.myrestaurant.common.jwt;
 
-import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.myrestaurant.dto.user.domain.User;
-import com.example.myrestaurant.dto.user.service.UserService;
+import com.example.myrestaurant.common.config.UserLoginForm;
+import com.example.myrestaurant.domain.user.domain.User;
+import com.example.myrestaurant.infrastructure.user.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,9 +23,9 @@ import java.io.IOException;
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    private UserService userService;
+    private UserServiceImpl userService;
 
-    public JWTLoginFilter(AuthenticationManager authenticationManager, UserService userService) {
+    public JWTLoginFilter(AuthenticationManager authenticationManager, UserServiceImpl userService) {
         super(authenticationManager);
         this.userService = userService;
         setFilterProcessesUrl("/login");
