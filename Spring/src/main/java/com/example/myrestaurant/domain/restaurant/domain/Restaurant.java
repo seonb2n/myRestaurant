@@ -26,5 +26,6 @@ public class Restaurant {
 
     @ManyToOne
     @ToString.Exclude
+    @JoinColumn(name = "userId")
     private User user;
 }
