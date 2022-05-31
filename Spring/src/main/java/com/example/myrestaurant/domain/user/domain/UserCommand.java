@@ -9,7 +9,7 @@ public class UserCommand {
     @Getter
     @Builder
     @ToString
-    static class UserRegisterCommand {
+    public static class UserRegisterCommand {
         private String email;
         private String password;
         private String nickName;
@@ -26,7 +26,7 @@ public class UserCommand {
     @Getter
     @Builder
     @ToString
-    static class UserLoginCommand {
+    public static class UserLoginCommand {
         private String email;
         private String password;
     }

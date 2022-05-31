@@ -6,7 +6,9 @@ import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class User extends BaseEntity {
     private Long userId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Restaurant> restaurantList;
+    private List<Restaurant> restaurantList = new ArrayList<>();
 
     private String email;
 
