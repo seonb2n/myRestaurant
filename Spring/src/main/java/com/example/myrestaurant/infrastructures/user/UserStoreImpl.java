@@ -5,10 +5,12 @@ import com.example.myrestaurant.domain.user.domain.User;
 import com.example.myrestaurant.domain.user.service.UserReader;
 import com.example.myrestaurant.domain.user.service.UserStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Component
 public class UserStoreImpl implements UserStore {
 
     private final UserRepository userRepository;

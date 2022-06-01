@@ -5,8 +5,10 @@ import com.example.myrestaurant.common.exception.LoginWrongException;
 import com.example.myrestaurant.domain.user.domain.User;
 import com.example.myrestaurant.domain.user.service.UserReader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class UserReaderImpl implements UserReader {
 
     private final UserRepository userRepository;
