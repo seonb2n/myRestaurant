@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService{
         var user = userReader.logInWithUserEmailAndPassword(userLoginCommand.getEmail(), userLoginCommand.getPassword());
         return new UserInfo.Main(user);
     }
+
+    @Override
+    public User getUserWithUserToken(String userToken) {
+        return userReader.getUserWithUserToken(userToken);
+    }
 }

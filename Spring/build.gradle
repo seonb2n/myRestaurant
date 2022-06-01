@@ -27,8 +27,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.h2database:h2'
 
-    implementation("com.auth0:java-jwt:3.16.0") //oauth0
-    implementation("io.jsonwebtoken:jjwt:0.9.1") //okta
+    // Token
+    implementation 'org.apache.commons:commons-lang3:3.9'
 
     // MapStruct
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
