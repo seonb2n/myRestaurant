@@ -30,8 +30,6 @@ public class User extends BaseEntity {
 
     private String nickName;
 
-    private boolean enabled;
-
     public void addRestaurant(Restaurant... restaurants) {
         Collections.addAll(this.restaurantList, restaurants);
     }
