@@ -11,12 +11,14 @@ public class UserInfo {
     @Getter
     @ToString
     public static class Main {
-        private String email;
-        private String password;
-        private String nickName;
-        private List<Restaurant> restaurantList;
+        private final String userToken;
+        private final String email;
+        private final String password;
+        private final String nickName;
+        private final List<Restaurant> restaurantList;
 
         public Main(User user) {
+            this.userToken = user.getUserToken();
             this.email = user.getEmail();
             this.nickName = user.getNickName();
             this.password = user.getPassword();

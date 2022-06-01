@@ -2,6 +2,7 @@ package com.example.myrestaurant.infrastructures.user;
 
 import com.example.myrestaurant.common.exception.EmailNotFoundException;
 import com.example.myrestaurant.common.exception.LoginWrongException;
+import com.example.myrestaurant.common.exception.UserTokenNotFoundException;
 import com.example.myrestaurant.domain.user.domain.User;
 import com.example.myrestaurant.domain.user.service.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,11 @@ public class UserReaderImpl implements UserReader {
     public User logInWithUserEmailAndPassword(String userEmail, String userPassword) {
         var user = userRepository.findUserByEmailAndPassword(userEmail, userPassword);
         return user.orElseThrow(LoginWrongException::new);
+    }
+
+    @Override
+    public User getUserWithUserToken(String userToken) {
+        var user = userRepository.findUserByUserToken(userToken);
+        return user.orElseThrow(UserTokenNotFoundException::new);
     }
 }

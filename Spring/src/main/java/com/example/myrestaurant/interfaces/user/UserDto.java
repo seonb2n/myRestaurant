@@ -2,6 +2,7 @@ package com.example.myrestaurant.interfaces.user;
 
 import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import com.example.myrestaurant.domain.user.domain.UserInfo;
+import com.example.myrestaurant.interfaces.restaurant.RestaurantDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,11 +28,13 @@ public class UserDto {
     @Setter
     @ToString
     public static class RegisterResponse {
+        private final String userToken;
         private final String email;
         private final String password;
         private final String nickName;
 
         public RegisterResponse(UserInfo.Main userInfo) {
+            this.userToken = userInfo.getUserToken();
             this.email = userInfo.getEmail();
             this.password = userInfo.getPassword();
             this.nickName = userInfo.getNickName();
@@ -52,13 +55,23 @@ public class UserDto {
     @Setter
     @ToString
     public static class LoginResponse {
+        private final String userToken;
         private final String nickName;
         private final List<Restaurant> restaurantList;
 
         public LoginResponse(UserInfo.Main userInfo) {
+            this.userToken = userInfo.getUserToken();
             this.nickName = userInfo.getNickName();
             this.restaurantList = userInfo.getRestaurantList();
         }
     }
+
+    @Getter
+    @Setter
+    public static class UpdateUserRequest {
+        private String userToken;
+        private List<RestaurantDto.RestaurantUpdateDto> restaurantUpdateDtoList;
+    }
+
 
 }
