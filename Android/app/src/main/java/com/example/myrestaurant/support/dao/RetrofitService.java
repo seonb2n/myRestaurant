@@ -1,9 +1,10 @@
-package com.example.myrestaurant.support;
+package com.example.myrestaurant.support.dao;
 
 import com.example.myrestaurant.dto.LoginResponseForm;
 import com.example.myrestaurant.dto.Restaurant;
-import com.example.myrestaurant.dto.RestaurantEnrollForm;
+import com.example.myrestaurant.dto.RestaurantUpdateDtoForm;
 import com.example.myrestaurant.dto.UserLoginForm;
+import com.example.myrestaurant.dto.UserRegisterDtoForm;
 import com.example.myrestaurant.dto.UserResult;
 
 import java.util.List;
@@ -16,14 +17,14 @@ import retrofit2.http.POST;
 
 public interface RetrofitService {
 
-    @GET("/getUserData")
-    Call<UserResult> getUser();
-
-    @POST("/login")
+    @POST("login")
     Call<LoginResponseForm> logIn(@Body UserLoginForm userLoginForm);
 
+    @POST("register")
+    Call<LoginResponseForm> register(@Body UserRegisterDtoForm userRegisterDtoForm);
+
     @POST("/addRestaurant")
-    Call<List<Restaurant>> addRestaurant(@Header("Authorization") String token, @Body RestaurantEnrollForm restaurantEnrollForm);
+    Call<List<Restaurant>> addRestaurant(@Header("Authorization") String token, @Body RestaurantUpdateDtoForm restaurantEnrollForm);
 
     @POST("deleteRestaurant")
     Call<List<Restaurant>> deleteRestaurant(@Header("Authorization") String token, @Body String name);

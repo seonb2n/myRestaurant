@@ -20,7 +20,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myrestaurant.R;
-import com.example.myrestaurant.support.RetrofitService;
+import com.example.myrestaurant.support.dao.BaseUrl;
+import com.example.myrestaurant.support.dao.RetrofitService;
 import com.example.myrestaurant.dto.UserLoginForm;
 import com.example.myrestaurant.dto.LoginResponseForm;
 import com.google.gson.Gson;
@@ -39,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
     Button buttonLogin;
     Button buttonJoin;
-    Button buttonJoinWithNaver;
     EditText textViewId;
     EditText textViewPw;
 
@@ -51,8 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 
     static Retrofit retrofit;
     static RetrofitService retrofitService;
-    private final String BASEURL = "http://172.30.1.13:8833/";
-
     private SharedPreferences auto;
 
     @Override
@@ -60,8 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         buttonLogin = findViewById(R.id.buttonLogin);
-        buttonJoin = findViewById(R.id.buttonJoin);
-        buttonJoinWithNaver = findViewById(R.id.buttonJoinNaver);
+        buttonJoin = findViewById(R.id.buttonToJoinPage);
         textViewId = findViewById(R.id.textViewId);
         textViewPw = findViewById(R.id.textViewPw);
         auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
@@ -71,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASEURL)
+                .baseUrl(BaseUrl.getBaseUrl())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -120,16 +117,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponseForm> call, Response<LoginResponseForm> response) {
                 if(response.isSuccessful()) {
                     LoginResponseForm responseForm = response.body();
-                    Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
-                    SharedPreferences.Editor autoLogin = auto.edit();
-                    autoLogin.putString("authToken", response.headers().get("auth_token"));
-                    autoLogin.putString("refreshToken", response.headers().get("refresh_Token"));
-                    autoLogin.putString("inputId", userLoginForm.getEmail());
-                    autoLogin.putString("inputPwd", userLoginForm.getPassword());
-                    autoLogin.commit();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(responseForm.getResult().equals("SUCCESS")) {
+                        Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
+                        SharedPreferences.Editor autoLogin = auto.edit();
+                        autoLogin.putString("inputId", userLoginForm.getEmail());
+                        autoLogin.putString("inputPwd", userLoginForm.getPassword());
+                        autoLogin.commit();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
                     Log.d(TAG, "onResponse: 실패 \n" + response.body());
                     Toast.makeText(LoginActivity.this, "재 로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
@@ -149,6 +146,12 @@ public class LoginActivity extends AppCompatActivity {
         String password = textViewPw.getText().toString();
 
         tryLogin(id, password);
+    }
+
+    public void onButtonToJoinPageClicked(View v) {
+        //회원 가입  액티비티로 이동
+        Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+        startActivity(intent);
     }
 
     //GPS 사용을 위한 메소드

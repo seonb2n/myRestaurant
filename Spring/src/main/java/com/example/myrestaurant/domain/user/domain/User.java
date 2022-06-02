@@ -3,6 +3,7 @@ package com.example.myrestaurant.domain.user.domain;
 import com.example.myrestaurant.domain.BaseEntity;
 import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import com.example.myrestaurant.common.util.TokenGenerator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class User extends BaseEntity {
     private String userToken;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference
     private List<Restaurant> restaurantList = new ArrayList<>();
 
     private String email;

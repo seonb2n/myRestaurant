@@ -32,12 +32,14 @@ public class UserDto {
         private final String email;
         private final String password;
         private final String nickName;
+        private final List<Restaurant> restaurantList;
 
         public RegisterResponse(UserInfo.Main userInfo) {
             this.userToken = userInfo.getUserToken();
             this.email = userInfo.getEmail();
             this.password = userInfo.getPassword();
             this.nickName = userInfo.getNickName();
+            this.restaurantList = userInfo.getRestaurantList();
         }
     }
 
@@ -57,12 +59,16 @@ public class UserDto {
     public static class LoginResponse {
         private final String userToken;
         private final String nickName;
+        private final String email;
+        private final String password;
         private final List<Restaurant> restaurantList;
 
         public LoginResponse(UserInfo.Main userInfo) {
             this.userToken = userInfo.getUserToken();
             this.nickName = userInfo.getNickName();
             this.restaurantList = userInfo.getRestaurantList();
+            this.email = userInfo.getEmail();
+            this.password = userInfo.getPassword();
         }
     }
 

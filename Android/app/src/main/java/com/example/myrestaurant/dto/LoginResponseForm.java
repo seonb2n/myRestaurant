@@ -6,59 +6,36 @@ import java.util.Arrays;
 
 public class LoginResponseForm {
 
-    @SerializedName("status")
-    private String responseStatus;
+    @SerializedName("result")
+    private String result;
 
     @SerializedName("message")
     private String responseMessage;
 
-    @SerializedName("nickName")
-    private String userName;
+    @SerializedName("data")
+    private Data data;
 
-    @SerializedName("userId")
-    private Long userId;
-
-    @SerializedName("restaurantList")
-    private Restaurant[] restaurants;
-
-    public String getUserName() {
-        return userName;
+    public String getResult() {
+        return result;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Restaurant[] getRestaurants() {
-        return restaurants;
-    }
-
-    public void setRestaurants(Restaurant[] restaurants) {
-        this.restaurants = restaurants;
-    }
-
-    public String getResponseStatus() {
-        return responseStatus;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public String getResponseMessage() {
         return responseMessage;
     }
 
-    @Override
-    public String toString() {
-        return "LoginResponseForm{" +
-                "userName='" + userName + '\'' +
-                ", userId=" + userId +
-                ", restaurants=" + Arrays.toString(restaurants) +
-                '}';
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

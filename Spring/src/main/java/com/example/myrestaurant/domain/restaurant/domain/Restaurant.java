@@ -2,6 +2,8 @@ package com.example.myrestaurant.domain.restaurant.domain;
 
 import com.example.myrestaurant.domain.user.domain.User;
 import com.example.myrestaurant.common.util.TokenGenerator;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +27,7 @@ public class Restaurant {
     private String category;
 
     @ManyToOne
-    @ToString.Exclude
+    @JsonBackReference
     @JoinColumn(name = "userId")
     private User user;
 

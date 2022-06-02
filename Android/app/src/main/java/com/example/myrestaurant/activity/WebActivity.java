@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
-import com.example.myrestaurant.dto.RestaurantEnrollForm;
+import com.example.myrestaurant.dto.RestaurantUpdateDtoForm;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class WebActivity extends AppCompatActivity {
     private WebView webView;
     private FloatingActionButton fab;
     static final int INTERNET_PERMISSON=1;
-    private final String BASEURL = "http://172.30.1.13:8833/";
+    private final String BASEURL = "http://172.30.1.13:8833/api/v1/users";
     SharedPreferences auto;
 
     @Override
@@ -67,12 +67,11 @@ public class WebActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                RestaurantEnrollForm restaurantEnrollForm = new RestaurantEnrollForm(
+                RestaurantUpdateDtoForm restaurantEnrollForm = new RestaurantUpdateDtoForm(
                         restaurant.getName(),
                         restaurant.getLocation(),
                         restaurant.getLink(),
-                        restaurant.getCategory(),
-                        auto.getString("inputId", null)
+                        restaurant.getCategory()
                 );
 
                 String authToken = "Bearer "+auto.getString("authToken", null);

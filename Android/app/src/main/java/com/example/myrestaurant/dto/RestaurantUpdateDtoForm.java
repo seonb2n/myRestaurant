@@ -1,18 +1,16 @@
 package com.example.myrestaurant.dto;
 
-public class RestaurantEnrollForm {
+public class RestaurantUpdateDtoForm {
     private String name;
     private String location;
     private String link;
     private String category;
-    private String userEmail;
 
-    public RestaurantEnrollForm(String name, String location, String link, String category, String userEmail) {
+    public RestaurantUpdateDtoForm(String name, String location, String link, String category) {
         this.name = name;
         this.location = location;
         this.link = link;
         this.category = category;
-        this.userEmail = userEmail;
     }
 
     public String getName() {
@@ -45,13 +43,5 @@ public class RestaurantEnrollForm {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 }
