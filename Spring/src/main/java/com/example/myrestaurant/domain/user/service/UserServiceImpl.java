@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public UserInfo.Main registerUser(UserCommand.UserRegisterCommand userRegisterCommand) {
         var initUser = userRegisterCommand.toEntity();
-        User user = userStore.store(initUser);
+        User user = userStore.registerUser(initUser);
         return new UserInfo.Main(user);
     }
 
