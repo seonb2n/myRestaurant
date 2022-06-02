@@ -24,6 +24,9 @@ public interface RestaurantDao {
     @Delete
     void delete(RestaurantEntity restaurantEntity);
 
+    @Query("DELETE FROM RESTAURANT")
+    void deleteAll();
+
     @Query("SELECT * FROM RESTAURANT")
     List<RestaurantEntity> getAll();
 }

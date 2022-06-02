@@ -178,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
+                restaurantDatabase.restaurantDao().deleteAll();
                 restaurantDatabase.restaurantDao().insertAll(restaurantEntityList);
             }catch (Exception e) {
                 Log.d(TAG, "레스토랑 정보를 local 에 저장하는데 실패했습니다.");

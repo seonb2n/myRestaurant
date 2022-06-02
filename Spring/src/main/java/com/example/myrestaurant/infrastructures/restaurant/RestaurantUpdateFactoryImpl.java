@@ -35,5 +35,7 @@ public class RestaurantUpdateFactoryImpl implements RestaurantUpdateFactory {
             }
         });
         return restaurantService.getRestaurantList(user);
+        //user 에 해당 하는 데이터 모두 삭제
+        //새로 들어온 데이터 전부 저장
     }
 }
