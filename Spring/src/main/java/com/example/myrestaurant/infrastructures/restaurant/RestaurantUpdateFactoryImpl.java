@@ -25,8 +25,8 @@ public class RestaurantUpdateFactoryImpl implements RestaurantUpdateFactory {
         restaurantCommandList.forEach(rest -> {
             if(!restaurantNameList.contains(rest.getName())) {
                 restaurantService.registerRestaurant(user, rest);
-                restaurantLatestNameList.add(rest.getName());
             }
+            restaurantLatestNameList.add(rest.getName());
         });
         //restaurantList 에만 있는 객체는 제거해야 한다.
         restaurantNameList.forEach(name -> {
