@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrestaurant.R;
 import com.example.myrestaurant.dto.Restaurant;
+import com.example.myrestaurant.dto.restaurant.RestaurantEntity;
 
 import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> implements ItemTouchHelperListener{
-    private List<Restaurant> restaurantArrayList;
+    private List<RestaurantEntity> restaurantArrayList;
     private WebSettings mWebSettings;
     private RestaurantAdapter.OnItemClickListener mListener;
 
@@ -52,7 +53,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         }
     }
 
-    public RestaurantAdapter(List<Restaurant> myRestaurants) {
+    public RestaurantAdapter(List<RestaurantEntity> myRestaurants) {
         restaurantArrayList = myRestaurants;
     }
 
@@ -87,7 +88,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public boolean onItemMove(int from_position, int to_position) {
-        Restaurant restaurant = restaurantArrayList.get(from_position);
+        RestaurantEntity restaurant = restaurantArrayList.get(from_position);
         restaurantArrayList.remove(from_position);
         restaurantArrayList.add(to_position, restaurant);
         notifyItemMoved(from_position, to_position);

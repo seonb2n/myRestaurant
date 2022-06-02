@@ -25,7 +25,7 @@
             android:background="@drawable/border"
             android:backgroundTint="@color/colorOrange"
             android:src="@drawable/ic_add_black"
-            />
+            android:contentDescription="@string/todo" />
 
     </FrameLayout>
 

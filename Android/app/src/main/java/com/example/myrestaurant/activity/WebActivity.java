@@ -1,5 +1,6 @@
 package com.example.myrestaurant.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ public class WebActivity extends AppCompatActivity {
     private final String BASEURL = "http://172.30.1.13:8833/api/v1/users";
     SharedPreferences auto;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,6 @@ public class WebActivity extends AppCompatActivity {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setNetworkAvailable(true);
         webView.getSettings().setJavaScriptEnabled(true);
-
         webView.getSettings().setDomStorageEnabled(true);
 
         webView.loadUrl(url);
@@ -73,28 +74,7 @@ public class WebActivity extends AppCompatActivity {
                         restaurant.getLink(),
                         restaurant.getCategory()
                 );
-
-                String authToken = "Bearer "+auto.getString("authToken", null);
-
-                Call<List<Restaurant>> enrollRestaurant = retrofitService.addRestaurant(authToken, restaurantEnrollForm);
-
-                enrollRestaurant.enqueue(new Callback<List<Restaurant>>() {
-                    @Override
-                    public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
-                        if(response.isSuccessful()) {
-                            Log.d(TAG, "onResponse: 성공, 결과 \n"+response.body());
-                            Toast.makeText(WebActivity.this, "나의 맛집 리스트에 추가됐습니다!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d(TAG, "onResponse: 실패");
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Restaurant>> call, Throwable t) {
-
-                    }
-                });
+                //todo 버튼이 눌리면 restaurant local db 에 추가
 
             }
         });

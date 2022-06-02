@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MyRestaurant</string>
     <string name="local_server_address">http://172.30.1.13:8833/</string>
+    <string name="todo">TODO</string>
 </resources>

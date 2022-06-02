@@ -23,13 +23,4 @@ public interface RetrofitService {
     @POST("register")
     Call<LoginResponseForm> register(@Body UserRegisterDtoForm userRegisterDtoForm);
 
-    @POST("/addRestaurant")
-    Call<List<Restaurant>> addRestaurant(@Header("Authorization") String token, @Body RestaurantUpdateDtoForm restaurantEnrollForm);
-
-    @POST("deleteRestaurant")
-    Call<List<Restaurant>> deleteRestaurant(@Header("Authorization") String token, @Body String name);
-
-    @GET("/getRestaurantList")
-    Call<List<Restaurant>> getRestaurantList(@Header("Authorization") String token);
-
 }

@@ -68,6 +68,7 @@ public class JoinActivity extends AppCompatActivity {
                     if(responseForm.getResult().equals("SUCCESS")) {
                         Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
                         SharedPreferences.Editor autoLogin = getSharedPreferences("auto", Activity.MODE_PRIVATE).edit();
+                        autoLogin.putString("userToken", responseForm.getData().getUserToken());
                         autoLogin.putString("inputId", userRegisterDtoForm.getEmail());
                         autoLogin.putString("inputPwd", userRegisterDtoForm.getPassword());
                         autoLogin.commit();

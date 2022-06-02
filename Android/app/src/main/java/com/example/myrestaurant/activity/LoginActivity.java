@@ -3,6 +3,7 @@ package com.example.myrestaurant.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 import android.Manifest;
 import android.app.Activity;
@@ -20,6 +21,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myrestaurant.R;
+import com.example.myrestaurant.dto.Data;
+import com.example.myrestaurant.dto.Restaurant;
+import com.example.myrestaurant.dto.restaurant.RestaurantEntity;
+import com.example.myrestaurant.dto.restaurant.database.RestaurantDatabase;
 import com.example.myrestaurant.support.dao.BaseUrl;
 import com.example.myrestaurant.support.dao.RetrofitService;
 import com.example.myrestaurant.dto.UserLoginForm;
@@ -36,6 +41,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.content.ContentValues.TAG;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginActivity extends AppCompatActivity {
 
     Button buttonLogin;
@@ -43,15 +51,17 @@ public class LoginActivity extends AppCompatActivity {
     EditText textViewId;
     EditText textViewPw;
 
-    static final int INTERNET_PERMISSON=1;
+    static final int INTERNET_PERMISSON = 1;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-
     static Retrofit retrofit;
     static RetrofitService retrofitService;
     private SharedPreferences auto;
+
+    private RestaurantDatabase restaurantDatabase = null;
+    List<RestaurantEntity> restaurantEntityList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,22 @@ public class LoginActivity extends AppCompatActivity {
         textViewId = findViewById(R.id.textViewId);
         textViewPw = findViewById(R.id.textViewPw);
         auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+
+        initViews();
+        initAutoLogin();
+
+    }
+
+    private void initAutoLogin() {
+        String loginId = auto.getString("inputId", null);
+        String loginPwd = auto.getString("inputPwd", null);
+        if (loginId != null && loginPwd != null) {
+            tryLogin(loginId, loginPwd);
+        }
+    }
+
+    private void initViews() {
+        restaurantDatabase = RestaurantDatabase.getInstance(this);
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -83,30 +109,23 @@ public class LoginActivity extends AppCompatActivity {
 
         int permissonCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
 
-        if(permissonCheck == PackageManager.PERMISSION_GRANTED){
+        if (permissonCheck == PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplicationContext(), "인터넷 접속 권한 있음", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "인터넷 접속 권한 있음", Toast.LENGTH_SHORT).show();
 
             //권한설정 dialog에서 거부를 누르면
             //ActivityCompat.shouldShowRequestPermissionRationale 메소드의 반환값이 true가 된다.
             //단, 사용자가 "Don't ask again"을 체크한 경우
             //거부하더라도 false를 반환하여, 직접 사용자가 권한을 부여하지 않는 이상, 권한을 요청할 수 없게 된다.
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
                 //이곳에 권한이 왜 필요한지 설명하는 Toast나 dialog를 띄워준 후, 다시 권한을 요청한다.
                 Toast.makeText(getApplicationContext(), "인터넷 접속 권한이 필요합니다", Toast.LENGTH_SHORT).show();
-                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.INTERNET}, INTERNET_PERMISSON);
-            }else{
-                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECEIVE_SMS}, INTERNET_PERMISSON);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_PERMISSON);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS}, INTERNET_PERMISSON);
             }
         }
-
-        String loginId = auto.getString("inputId", null);
-        String loginPwd = auto.getString("inputPwd", null);
-        if(loginId != null && loginPwd != null) {
-            tryLogin(loginId, loginPwd);
-        }
-
     }
 
     private void tryLogin(String id, String password) {
@@ -115,14 +134,18 @@ public class LoginActivity extends AppCompatActivity {
         loginTest.enqueue(new Callback<LoginResponseForm>() {
             @Override
             public void onResponse(Call<LoginResponseForm> call, Response<LoginResponseForm> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     LoginResponseForm responseForm = response.body();
-                    if(responseForm.getResult().equals("SUCCESS")) {
-                        Log.d(TAG, "onResponse: 성공, 결과 \n"+responseForm);
+                    if (responseForm.getResult().equals("SUCCESS")) {
+                        Log.d(TAG, "onResponse: 성공, 결과 \n" + responseForm);
                         SharedPreferences.Editor autoLogin = auto.edit();
+                        autoLogin.putString("userToken", responseForm.getData().getUserToken());
                         autoLogin.putString("inputId", userLoginForm.getEmail());
                         autoLogin.putString("inputPwd", userLoginForm.getPassword());
                         autoLogin.commit();
+                        //로그인 결과에 따른 데이터를 db 에 저장해야 함.
+                        Data data = responseForm.getData();
+                        updateDataToDB(data);
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -138,6 +161,29 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
+    }
+
+    public void updateDataToDB(Data data) {
+        List<Restaurant> restaurantList = data.getRestaurantList();
+        for (Restaurant r : restaurantList) {
+            restaurantEntityList.add(new RestaurantEntity(r));
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread addThread = new Thread(insertRunnable);
+        addThread.start();
+
+    }
+
+    class InsertRunnable implements Runnable {
+        @Override
+        public void run() {
+            try {
+                restaurantDatabase.restaurantDao().insertAll(restaurantEntityList);
+            }catch (Exception e) {
+                Log.d(TAG, "레스토랑 정보를 local 에 저장하는데 실패했습니다.");
+            }
+
+        }
     }
 
     public void onButtonLoginClicked(View v) {
