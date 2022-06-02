@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RestaurantCommand {
 
     @Getter
@@ -35,6 +38,14 @@ public class RestaurantCommand {
     public static class DeleteRestaurantCommand {
         private String name;
         private User user;
+    }
+
+    public static List<Restaurant> toRestaurantList(User user, List<RestaurantCommand.RegisterRestaurantCommand> restaurantCommandList) {
+        List<Restaurant> restaurantList = new ArrayList<>();
+        restaurantCommandList.forEach(rest -> {
+            restaurantList.add(rest.toEntity(user));
+        });
+        return restaurantList;
     }
 
 }

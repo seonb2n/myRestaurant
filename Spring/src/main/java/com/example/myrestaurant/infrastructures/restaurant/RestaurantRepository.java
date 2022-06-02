@@ -18,4 +18,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<String> findNameByUser(User user);
 
     void deleteByRestaurantToken(String restaurantToken);
+
+    void deleteAllByUser(User user);
 }

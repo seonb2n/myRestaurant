@@ -1,5 +1,6 @@
 package com.example.myrestaurant.domain.restaurant.service;
 
+import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import com.example.myrestaurant.domain.restaurant.domain.RestaurantCommand;
 import com.example.myrestaurant.domain.restaurant.domain.RestaurantInfo;
 import com.example.myrestaurant.domain.user.domain.User;
@@ -37,6 +38,19 @@ public class RestaurantServiceImpl implements RestaurantService{
 
     @Override
     public List<RestaurantInfo.Main> getRestaurantList(User user) {
-        return restaurantReader.getRestaurantByUser(user).stream().map(RestaurantInfo.Main::new).collect(Collectors.toList());
+        var restaurantList = restaurantReader.getRestaurantByUser(user);
+        return RestaurantInfo.toRestaurantInfo(restaurantList);
+    }
+
+    @Override
+    public void deleteAllRestaurantWithUser(User user) {
+        restaurantRemover.deleteAllRestaurantWithUser(user);
+    }
+
+    @Override
+    public List<RestaurantInfo.Main> registerAllRestaurant(User user, List<RestaurantCommand.RegisterRestaurantCommand> registerRestaurantCommandList) {
+        var initRestaurantList = RestaurantCommand.toRestaurantList(user, registerRestaurantCommandList);
+        var restaurantList = restaurantStore.storeAll(initRestaurantList);
+        return RestaurantInfo.toRestaurantInfo(restaurantList);
     }
 }

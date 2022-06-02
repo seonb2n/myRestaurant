@@ -16,4 +16,8 @@ public interface RestaurantService {
     List<String> getRestaurantNameList(User user);
 
     List<RestaurantInfo.Main> getRestaurantList(User user);
+
+    void deleteAllRestaurantWithUser(User user);
+
+    List<RestaurantInfo.Main> registerAllRestaurant(User user, List<RestaurantCommand.RegisterRestaurantCommand> registerRestaurantCommandList);
 }

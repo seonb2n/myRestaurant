@@ -4,6 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RestaurantInfo {
 
     @Getter
@@ -22,5 +25,13 @@ public class RestaurantInfo {
             this.link = restaurant.getLink();
             this.category = restaurant.getCategory();
         }
+    }
+
+    public static List<RestaurantInfo.Main> toRestaurantInfo(List<Restaurant> restaurantList) {
+        List<RestaurantInfo.Main> restaurantInfoList = new ArrayList<>();
+        restaurantList.forEach(restaurant -> {
+            restaurantInfoList.add(new Main(restaurant));
+        });
+        return restaurantInfoList;
     }
 }
