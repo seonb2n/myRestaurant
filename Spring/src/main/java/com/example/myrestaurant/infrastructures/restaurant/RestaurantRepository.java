@@ -5,6 +5,7 @@ import com.example.myrestaurant.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.Tuple;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     void deleteByRestaurantToken(String restaurantToken);
 
     void deleteAllByUser(User user);
+
+    @Query("select r.name, count(r.name) from Restaurant r group by name having count(name) >= 1")
+    List<Tuple> findBestRestaurant();
 }

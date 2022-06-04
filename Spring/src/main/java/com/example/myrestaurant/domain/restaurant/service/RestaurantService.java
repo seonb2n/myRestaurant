@@ -20,4 +20,6 @@ public interface RestaurantService {
     void deleteAllRestaurantWithUser(User user);
 
     List<RestaurantInfo.Main> registerAllRestaurant(User user, List<RestaurantCommand.RegisterRestaurantCommand> registerRestaurantCommandList);
+
+    void findBestRestaurant();
 }

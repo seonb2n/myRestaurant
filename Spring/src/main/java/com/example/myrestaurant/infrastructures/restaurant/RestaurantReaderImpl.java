@@ -6,9 +6,12 @@ import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import com.example.myrestaurant.domain.restaurant.service.RestaurantReader;
 import com.example.myrestaurant.domain.restaurant.service.RestaurantStore;
 import com.example.myrestaurant.domain.user.domain.User;
+import com.example.myrestaurant.infrastructures.restaurant.schedule.BestRestaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Tuple;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -30,5 +33,15 @@ public class RestaurantReaderImpl implements RestaurantReader {
     @Override
     public List<String> getRestaurantNameByUser(User user) {
         return restaurantRepository.findNameByUser(user);
+    }
+
+    @Override
+    public List<BestRestaurant> getBestRestaurant() {
+        List<BestRestaurant> bestRestaurantList = new ArrayList<>();
+        List<Tuple> bestRestaurant = restaurantRepository.findBestRestaurant();
+        bestRestaurant.forEach(tuple -> {
+            bestRestaurantList.add(new BestRestaurant(tuple.get(0).toString(), Integer.parseInt(tuple.get(1).toString())));
+        });
+        return bestRestaurantList;
     }
 }
