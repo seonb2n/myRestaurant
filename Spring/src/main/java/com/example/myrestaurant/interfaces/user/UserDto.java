@@ -3,6 +3,7 @@ package com.example.myrestaurant.interfaces.user;
 import com.example.myrestaurant.domain.restaurant.domain.Restaurant;
 import com.example.myrestaurant.domain.user.domain.UserInfo;
 import com.example.myrestaurant.interfaces.restaurant.RestaurantDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +16,7 @@ public class UserDto {
     @Getter
     @Setter
     @ToString
+    @Builder
     public static class RegisterUserRequest {
         @NotEmpty(message = "사용자 이메일은 필수값입니다.")
         private String email;
