@@ -2,6 +2,8 @@ server:
   port: 8833
 
 spring:
+  application:
+    name: example
   h2:
     console:
       enabled: true
@@ -11,6 +13,7 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -18,3 +21,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
