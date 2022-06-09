@@ -51,16 +51,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-    // WebSocket and Chatting
+    //websocket
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
-    compileOnly group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time'
-    implementation 'com.querydsl:querydsl-jpa'
-    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
 
-    // JSP
-    compileOnly 'javax.servlet:jstl'
-    compileOnly "org.apache.tomcat.embed:tomcat-embed-jasper"
+
+    //view
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.webjars.bower:bootstrap:4.3.1'
+    implementation 'org.webjars.bower:vue:2.5.16'
+    implementation 'org.webjars.bower:axios:0.17.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
 }
 
 test {

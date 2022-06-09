@@ -19,27 +19,13 @@ import java.util.Map;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.example.myrestaurant"})
 public class WebConfig implements WebMvcConfigurer {
-
-    @Bean
-    public InternalResourceViewResolver resolver(){
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/jsp/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }
-
-    public void configureDefaultServerletHandling(DefaultServletHandlerConfigurer configurer){
-        configurer.enable();
-    }
-
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/").resourceChain(false);
+        registry.setOrder(1);
     }
 
-    //Spring bean 을 JMX 로 노출시키기 위한 설정
+//Spring bean 을 JMX 로 노출시키기 위한 설정
 //    @Bean
 //    AppStatistics appStatistics() {
 //        return new AppStatisticsImpl();
