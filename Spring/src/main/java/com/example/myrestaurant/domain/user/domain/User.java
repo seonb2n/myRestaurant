@@ -15,13 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Getter
-@Table(name="user")
+@Table(name="user", indexes = {@Index(name = "user_token_index", columnList = "user_token")})
 public class User extends BaseEntity {
     private static final String PREFIX_USER = "user_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "user_token")
     private String userToken;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
@@ -32,6 +35,7 @@ public class User extends BaseEntity {
 
     private String password;
 
+    @Column(name = "user_nickname")
     private String nickName;
 
     @Builder

@@ -24,8 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'com.h2database:h2'
 
     // Token
     implementation 'org.apache.commons:commons-lang3:3.12.0'
@@ -42,7 +42,10 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
 
-    runtimeOnly 'com.h2database:h2'
+    //runtimeOnly 'com.h2database:h2'
+    // Database
+    runtimeOnly 'mysql:mysql-connector-java'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompileOnly "org.springframework.boot:spring-boot-starter-test"
 

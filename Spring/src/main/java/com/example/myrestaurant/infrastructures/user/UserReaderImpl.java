@@ -31,4 +31,9 @@ public class UserReaderImpl implements UserReader {
         var user = userRepository.findUserByUserToken(userToken);
         return user.orElseThrow(UserTokenNotFoundException::new);
     }
+
+    @Override
+    public User findUserWithUserName(String userName) {
+        return userRepository.findUserByNickName(userName).orElseThrow(RuntimeException::new);
+    }
 }

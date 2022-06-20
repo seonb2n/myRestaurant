@@ -9,4 +9,6 @@ public interface UserReader {
     User logInWithUserEmailAndPassword(String userEmail, String userPassword);
 
     User getUserWithUserToken(String userToken);
+
+    User findUserWithUserName(String userName);
 }
