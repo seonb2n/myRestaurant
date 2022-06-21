@@ -10,6 +10,7 @@ spring:
     username: root
     password: tiger
 
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -28,6 +29,8 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+  thymeleaf:
+    enabled: false
 
 management:
   endpoints:

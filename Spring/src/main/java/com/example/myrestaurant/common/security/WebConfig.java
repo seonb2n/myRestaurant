@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.setOrder(1);
     }
 
+
 //Spring bean 을 JMX 로 노출시키기 위한 설정
 //    @Bean
 //    AppStatistics appStatistics() {

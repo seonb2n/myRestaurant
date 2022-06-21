@@ -6,8 +6,6 @@ import com.example.myrestaurant.application.UserFacade;
 import com.example.myrestaurant.common.response.CommonResponse;
 import com.example.myrestaurant.domain.restaurant.domain.RestaurantCommand;
 import com.example.myrestaurant.domain.user.domain.User;
-import com.example.myrestaurant.domain.user.domain.UserInfo;
-import com.example.myrestaurant.interfaces.restaurant.RestaurantDto;
 import com.example.myrestaurant.interfaces.restaurant.RestaurantDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
