@@ -10,6 +10,7 @@ spring:
     username: root
     password: tiger
 
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -28,6 +29,12 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+  mvc:
+    view:
+      prefix: /WEB_INF/jsp/
+      suffix: .jsp
+  thymeleaf:
+    enabled: false
 
 management:
   endpoints:

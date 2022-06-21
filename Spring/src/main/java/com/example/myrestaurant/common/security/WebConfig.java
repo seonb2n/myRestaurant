@@ -25,6 +25,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.setOrder(1);
     }
 
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
+        resourceViewResolver.setPrefix("/WEB_INF/jsp/");
+        resourceViewResolver.setSuffix(".jsp");
+        return resourceViewResolver;
+    }
+
 //Spring bean 을 JMX 로 노출시키기 위한 설정
 //    @Bean
 //    AppStatistics appStatistics() {
