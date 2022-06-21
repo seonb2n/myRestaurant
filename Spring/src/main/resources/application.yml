@@ -29,10 +29,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-  mvc:
-    view:
-      prefix: /WEB_INF/jsp/
-      suffix: .jsp
   thymeleaf:
     enabled: false
 

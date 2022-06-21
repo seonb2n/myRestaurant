@@ -2,8 +2,12 @@ package com.example.myrestaurant.interfaces.user.naver;
 
 import com.example.myrestaurant.common.naver.NaverLoginBO;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +39,19 @@ public class NaverLoginController {
     @RequestMapping(value = "/callback", method = {RequestMethod.GET, RequestMethod.POST})
     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
         log.info(">>> callback");
-        OAuth2AccessToken oAuth2AccessToken;
-        oAuth2AccessToken = naverLoginBO.getAccessToken(session, code, state);
-        apiResult = naverLoginBO.getUserProfile(oAuth2AccessToken);
+        OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //1. 로그인 사용자 정보를 읽어온다.
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+
+        JsonParser parser = new JsonParser();
+        Object obj = parser.parse(apiResult);
+        JsonObject jsonObject = (JsonObject) obj;
+
+        JsonObject response_obj = (JsonObject) jsonObject.get("response");
+        String nickName = response_obj.get("nickname").toString();
+        log.info(">>> 닉네임: " + nickName);
+        session.setAttribute("sessionId", nickName);
         model.addAttribute("result", apiResult);
 
         return "naverSuccess";
