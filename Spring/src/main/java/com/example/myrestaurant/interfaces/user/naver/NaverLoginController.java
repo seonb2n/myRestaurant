@@ -39,7 +39,7 @@ public class NaverLoginController {
     @RequestMapping(value = "/callback", method = {RequestMethod.GET, RequestMethod.POST})
     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
         log.info(">>> callback");
-        OAuth2AccessToken oauthToken;
+        String oauthToken;
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
         //1. 로그인 사용자 정보를 읽어온다.
         apiResult = naverLoginBO.getUserProfile(oauthToken);
