@@ -1,4 +1,4 @@
-package com.example.myrestaurant.common.naver;
+package com.example.myrestaurant.common.api.naver;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
 

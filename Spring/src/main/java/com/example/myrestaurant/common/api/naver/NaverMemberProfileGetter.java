@@ -1,4 +1,4 @@
-package com.example.myrestaurant.common.naver;
+package com.example.myrestaurant.common.api.naver;
 
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,6 @@ public class NaverMemberProfileGetter {
     public static String run(String accessToken) {
         String token = accessToken; // 네이버 로그인 접근 토큰;
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
-
 
         String apiURL = "https://openapi.naver.com/v1/nid/me";
 
